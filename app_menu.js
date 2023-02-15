@@ -363,7 +363,6 @@ function gonative_match_statusbar_to_body_background_color() {
 
 function set_menu() {
   var host = window.location.host;
-  alert(host);
   switch(host) {
       case 'cmty.one':
         var items = [{
