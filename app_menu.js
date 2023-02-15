@@ -397,6 +397,7 @@ function set_menu() {
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'supremecommunity.com':
+      case 'www.supremecommunity.com':
         var items = [{
               label: "DROPLISTS",
               url: "https://www.supremecommunity.com/season/latest/droplists/",
@@ -433,6 +434,7 @@ function set_menu() {
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'golfwangcommunity.com':
+      case 'www.golfwangcommunity.com':
         var items = [{
               label: "DROPLISTS",
               url: "https://www.golfwangcommunity.com/droplists/",
@@ -453,6 +455,7 @@ function set_menu() {
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'palacecmty.com':
+      case 'www.palacecmty.com':
         var items = [];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
