@@ -367,94 +367,94 @@ function set_menu() {
   switch(host) {
       case 'cmty.one':
         var items = [{
-              label: "1Google",
-              url: "https://google.com",
+              label: "Home",
+              url: "https://cmty.one/",
+              icon: "fas fa-cog" // optional Font Awesome icon
+            },{
+              label: "Latest",
+              url: "https://cmty.one/latest/",
               icon: "fas fa-cog" // optional Font Awesome icon
             }, {
-              label: "2Sample Grouping",
+              label: "News",
               isGrouping: true, 
               subLinks: [{
-                label: "Apple",
-                url: "https://apple.com",
+                label: "Supreme",
+                url: "https://cmty.one/category/supreme/",
+                icon: "fas fa-home" // optional
+              },{
+                label: "Palace",
+                url: "https://cmty.one/category/palace/",
                 icon: "fas fa-home" // optional
               }, {
-                label: "Google",
-                url: "https://google.com",
+                label: "Fashion",
+                url: "https://cmty.one/category/fashion/",
+                icon: "fas fa-home" //optional
+              }, {
+                label: "Sneakers",
+                url: "https://cmty.one/category/sneakers/",
                 icon: "fas fa-home" //optional
               }]
-            }, {
-              label: "Sample Javascript",
-              url: "javascript:alert('test')"
-          }];
+            }];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'supremecommunity.com':
         var items = [{
-              label: "7Google",
-              url: "https://google.com",
+              label: "Droplists",
+              url: "https://www.supremecommunity.com/season/latest/droplists/",
               icon: "fas fa-cog" // optional Font Awesome icon
-            }, {
-              label: "4Sample Grouping",
+            },{
+              label: "Overviews",
+              url: "https://www.supremecommunity.com/season/latest/overview/",
+              icon: "fas fa-cog" // optional Font Awesome icon
+            },{
+              label: "Lookbooks",
+              url: "https://www.supremecommunity.com/season/latest/overview/",
+              icon: "fas fa-cog" // optional Font Awesome icon
+            },{
+              label: "Restocks",
               isGrouping: true, 
               subLinks: [{
-                label: "Apple",
-                url: "https://apple.com",
+                label: "EU",
+                url: "https://www.supremecommunity.com/restocks/eu/",
                 icon: "fas fa-home" // optional
               }, {
-                label: "Google",
-                url: "https://google.com",
-                icon: "fas fa-home" //optional
+                label: "UK",
+                url: "https://www.supremecommunity.com/restocks/uk/",
+                icon: "fas fa-home" // optional
+              },{
+                label: "US",
+                url: "https://www.supremecommunity.com/restocks/us/",
+                icon: "fas fa-home" // optional
+              },{
+                label: "JPN",
+                url: "https://www.supremecommunity.com/restocks/jpn/",
+                icon: "fas fa-home" // optional
               }]
-            }, {
-              label: "Sample Javascript",
-              url: "javascript:alert('test')"
-          }];
+            }];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'golfwangcommunity.com':
         var items = [{
-              label: "9Google",
-              url: "https://google.com",
+              label: "Droplists",
+              url: "https://www.golfwangcommunity.com/droplists/",
               icon: "fas fa-cog" // optional Font Awesome icon
-            }, {
-              label: "4Sample Grouping",
-              isGrouping: true, 
-              subLinks: [{
-                label: "Apple",
-                url: "https://apple.com",
-                icon: "fas fa-home" // optional
-              }, {
-                label: "Google",
-                url: "https://google.com",
-                icon: "fas fa-home" //optional
-              }]
-            }, {
-              label: "Sample Javascript",
-              url: "javascript:alert('test')"
-          }];
+            },{
+              label: "Overviews",
+              url: "https://www.golfwangcommunity.com/collection/all/",
+              icon: "fas fa-cog" // optional Font Awesome icon
+            },{
+              label: "Lookbooks",
+              url: "https://www.golfwangcommunity.com/lookbook/latest/",
+              icon: "fas fa-cog" // optional Font Awesome icon
+            },{
+              label: "Restocks",
+              url: "https://www.golfwangcommunity.com/restocks/",
+              icon: "fas fa-cog" // optional Font Awesome icon
+            }];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'palacecmty.com':
-        var items = [{
-              label: "5Google",
-              url: "https://google.com",
-              icon: "fas fa-cog" // optional Font Awesome icon
-            }, {
-              label: "334Sample Grouping",
-              isGrouping: true, 
-              subLinks: [{
-                label: "22Apple",
-                url: "https://apple.com",
-                icon: "fas fa-home" // optional
-              }, {
-                label: "333Google",
-                url: "https://google.com",
-                icon: "fas fa-home" //optional
-              }]
-            }, {
-              label: "Sample Javascript",
-              url: "javascript:alert('test')"
-          }];
+        var items = [];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       default:
