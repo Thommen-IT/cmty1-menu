@@ -367,89 +367,89 @@ function set_menu() {
   switch(host) {
       case 'cmty.one':
         var items = [{
-              label: "Home",
+              label: "HOME",
               url: "https://cmty.one/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: ""
             },{
-              label: "Latest",
+              label: "LATEST",
               url: "https://cmty.one/latest/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: ""
             }, {
-              label: "News",
+              label: "NEWS",
               isGrouping: true, 
               subLinks: [{
-                label: "Supreme",
+                label: "SUPREME",
                 url: "https://cmty.one/category/supreme/",
-                icon: "fas fa-home" // optional
+                icon: ""
               },{
-                label: "Palace",
+                label: "PALACE",
                 url: "https://cmty.one/category/palace/",
-                icon: "fas fa-home" // optional
+                icon: ""
               }, {
-                label: "Fashion",
+                label: "FASHION",
                 url: "https://cmty.one/category/fashion/",
-                icon: "fas fa-home" //optional
+                icon: ""
               }, {
-                label: "Sneakers",
+                label: "SNEAKERS",
                 url: "https://cmty.one/category/sneakers/",
-                icon: "fas fa-home" //optional
+                icon: ""
               }]
             }];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'supremecommunity.com':
         var items = [{
-              label: "Droplists",
+              label: "DROPLISTS",
               url: "https://www.supremecommunity.com/season/latest/droplists/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: ""
             },{
-              label: "Overviews",
+              label: "OVERVIEWS",
               url: "https://www.supremecommunity.com/season/latest/overview/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: ""
             },{
-              label: "Lookbooks",
+              label: "LOOKBOOKS",
               url: "https://www.supremecommunity.com/season/latest/overview/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: ""
             },{
-              label: "Restocks",
+              label: "RESTOCKS",
               isGrouping: true, 
               subLinks: [{
                 label: "EU",
                 url: "https://www.supremecommunity.com/restocks/eu/",
-                icon: "fas fa-home" // optional
+                icon: "" 
               }, {
                 label: "UK",
                 url: "https://www.supremecommunity.com/restocks/uk/",
-                icon: "fas fa-home" // optional
+                icon: ""
               },{
                 label: "US",
                 url: "https://www.supremecommunity.com/restocks/us/",
-                icon: "fas fa-home" // optional
+                icon: ""
               },{
                 label: "JPN",
                 url: "https://www.supremecommunity.com/restocks/jpn/",
-                icon: "fas fa-home" // optional
+                icon: ""
               }]
             }];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'golfwangcommunity.com':
         var items = [{
-              label: "Droplists",
+              label: "DROPLISTS",
               url: "https://www.golfwangcommunity.com/droplists/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: "" 
             },{
-              label: "Overviews",
+              label: "OVERVIEWS",
               url: "https://www.golfwangcommunity.com/collection/all/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: ""
             },{
-              label: "Lookbooks",
+              label: "LOOKBOOKS",
               url: "https://www.golfwangcommunity.com/lookbook/latest/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: "" 
             },{
-              label: "Restocks",
+              label: "RESTOCKS",
               url: "https://www.golfwangcommunity.com/restocks/",
-              icon: "fas fa-cog" // optional Font Awesome icon
+              icon: "" 
             }];
         addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
