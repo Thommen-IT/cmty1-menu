@@ -431,7 +431,8 @@ function set_menu() {
                 icon: ""
               }]
             }];
-        addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
+          gonative.sidebar.setItems({"items":items,"enabled": true, "persist":false});
+          gonative.statusbar.set({'style':'light','color':'800020DF','overlay':true});
         break;
       case 'golfwangcommunity.com':
       case 'www.golfwangcommunity.com':
