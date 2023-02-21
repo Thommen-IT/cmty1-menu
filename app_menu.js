@@ -469,6 +469,8 @@ function set_title(title){
 }
 
 function gonative_library_ready(){
-    set_title(document.title);
+    if (window.location.pathname != "/" && window.location.pathname != "/mobile") { 
+        set_title(document.title);
+    }
     set_menu();
 }
