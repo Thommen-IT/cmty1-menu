@@ -464,6 +464,11 @@ function set_menu() {
   }
 }
 
+function set_title(title){
+    gonative.navigationTitles.setCurrent({'title':title})
+}
+
 function gonative_library_ready(){
-  set_menu();
+    set_title(document.title);
+    set_menu();
 }
