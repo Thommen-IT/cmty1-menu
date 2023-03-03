@@ -467,7 +467,7 @@ function set_menu() {
               url: "https://www.supremecommunity.com/help/",
               icon: ""
             }];
-          gonative.sidebar.setItems({"items":items,"enabled": true, "persist":false});
+          addCommand("gonative://sidebar/setItems", {"items":items,"enabled": true, "persist":false});
         break;
       case 'golfwangcommunity.com':
       case 'www.golfwangcommunity.com':
