@@ -561,12 +561,16 @@ function set_menu() {
 }
 
 function set_title(title){
-    gonative.navigationTitles.setCurrent({'title':title})
+    //gonative.navigationTitles.setCurrent({'title':title})
+    window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title
+}
+
+if (navigator.userAgent.indexOf('cmtyone') > -1) {
+    if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
+        set_title(document.title.split(' -')[0]);
+    }
 }
 
 function gonative_library_ready(){
-    if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2") { 
-        set_title(document.title.split(' -')[0]);
-    }
     set_menu();
 }
