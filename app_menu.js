@@ -562,7 +562,7 @@ function set_menu() {
 
 function set_title(title){
     //gonative.navigationTitles.setCurrent({'title':title})
-    window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title
+    window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title;
 }
 
 if (navigator.userAgent.indexOf('cmtyone') > -1) {
