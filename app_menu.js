@@ -201,7 +201,7 @@ function set_menu() {
 
 function set_title(title){
     //window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title;
-    urls.push('gonative://navigationTitles/setCurrent?title=' + title);
+    urls.push('gonative://navigationTitles/setCurrent?title=' + encodeURIComponent(title));
 }
 
 if (navigator.userAgent.indexOf('cmtyone') > -1) {
