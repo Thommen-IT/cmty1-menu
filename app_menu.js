@@ -1,3 +1,4 @@
+var urls = [];
 function set_menu() {
   var host = window.location.host;
   var items = "[]";
@@ -193,21 +194,27 @@ function set_menu() {
         console.log("No menu items found for this domain.")
   }
   if (items && items.length) {
-    var json = JSON.stringify(items);
-    window.location.href="gonative://sidebar/setItems?items=" + encodeURIComponent(json);
+    //window.location.href="gonative://sidebar/setItems?items=" + encodeURIComponent(json);
+    urls.push("gonative://sidebar/setItems?items=" + encodeURIComponent(JSON.stringify(items)));
   }
 }
 
 function set_title(title){
-    //gonative.navigationTitles.setCurrent({'title':title})
-    window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title;
+    //window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title;
+    urls.push('gonative://navigationTitles/setCurrent?title=' + title);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (navigator.userAgent.indexOf('cmtyone') > -1) {
-        if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
-            set_title(document.title.split(' -')[0]);
-        }
-        set_menu();
+if (navigator.userAgent.indexOf('cmtyone') > -1) {
+    if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
+        set_title(document.title.split(' -')[0]);
     }
-});
+    set_menu();
+
+    window.location.href = 'gonative://nativebridge/multi?data=' + encodeURIComponent(JSON.stringify({urls: urls}));
+}
+
+
+
+
+    
+
