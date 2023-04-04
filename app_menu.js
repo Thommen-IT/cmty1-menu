@@ -7,35 +7,36 @@ function set_menu() {
         items = [{
               label: "HOME",
               url: "https://cmty.one/",
-              icon: ""
+              icon: "fas fa-home"
             },{
               label: "LATEST",
               url: "https://cmty.one/latest/",
-              icon: ""
+              icon: "fas fa-sparkles"
             }, {
               label: "NEWS",
-              isGrouping: true, 
+              isGrouping: true,
+              icon: "fas fa-newspaper-o",
               subLinks: [{
                 label: "SUPREME",
                 url: "https://cmty.one/category/supreme/",
-                icon: ""
+                icon: "custom icon-supreme-logo"
               },{
                 label: "PALACE",
                 url: "https://cmty.one/category/palace/",
-                icon: ""
+                icon: "custom icon-palace-logo"
               }, {
                 label: "FASHION",
                 url: "https://cmty.one/category/fashion/",
-                icon: ""
+                icon: "fas fa-shirt"
               }, {
                 label: "SNEAKERS",
                 url: "https://cmty.one/category/sneakers/",
-                icon: ""
+                icon: "fas fa-shoe-prints"
               }]
             },{
               label: "GALLERY",
               url: "",
-              icon: ""
+              icon: "fas fa-picture-o"
             }];
         break;
       case 'supremecommunity.com':
@@ -43,22 +44,23 @@ function set_menu() {
         items = [{
               label: "HOME",
               url: "https://www.supremecommunity.com/mobile2",
-              icon: ""
+              icon: "fas fa-home"
             },{
               label: "DROPLISTS",
               url: "https://www.supremecommunity.com/season/latest/droplists/",
-              icon: ""
+              icon: "fas fa-list-dropdown"
             },{
               label: "ITEMS",
               url: "https://www.supremecommunity.com/season/latest/overview/",
-              icon: ""
+              icon: "fas fa-clothes-hanger"
             },{
               label: "LEFT TO DROP",
               url: "https://www.supremecommunity.com/season/latest/lefttodrop/",
-              icon: ""
+              icon: "fas fa-list-timeline"
             },{
               label: "RESTOCKS",
               isGrouping: true, 
+              icon: "fas fa-retweet",
               subLinks: [{
                 label: "EU",
                 url: "https://www.supremecommunity.com/restocks/eu/",
@@ -78,7 +80,8 @@ function set_menu() {
               }]
             },{
               label: "SELLOUT TIMES",
-              isGrouping: true, 
+              isGrouping: true,
+              icon: "fas fa-timer",
               subLinks: [{
                 label: "EU",
                 url: "https://www.supremecommunity.com/season/latest/times/eu/",
@@ -99,11 +102,11 @@ function set_menu() {
             },{
               label: "LOOKBOOKS",
               url: "https://www.supremecommunity.com/season/latest/overview/",
-              icon: ""
+              icon: "fas fa-book-user"
             },{
               label: "HELP",
               url: "https://www.supremecommunity.com/help/",
-              icon: ""
+              icon: "fas fa-square-question"
             }];
         break;
       case 'golfwangcommunity.com':
@@ -111,35 +114,35 @@ function set_menu() {
         items = [{
               label: "HOME",
               url: "https://www.golfwangcommunity.com/mobile2",
-              icon: "" 
+              icon: "fas fa-home" 
             },{
               label: "DROPLISTS",
               url: "https://www.golfwangcommunity.com/droplists",
-              icon: "" 
+              icon: "fas fa-list-dropdown" 
             },{
               label: "COLLECTIONS",
               url: "https://www.golfwangcommunity.com/collection",
-              icon: ""
+              icon: "fas fa-chart-tree-map"
             },{
               label: "ITEMS",
               url: "https://www.golfwangcommunity.com/collection/all",
-              icon: ""
+              icon: "fas fa-clothes-hanger"
             },{
               label: "LOOKBOOKS",
               url: "https://www.golfwangcommunity.com/lookbook/latest/",
-              icon: "" 
+              icon: "fas fa-book-user" 
             },{
               label: "RESTOCKS",
               url: "https://www.golfwangcommunity.com/restocks/",
-              icon: "" 
+              icon: "fas fa-retweet"
             },{
               label: "LOOKBOOKS",
               url: "https://www.golfwangcommunity.com/lookbook/latest",
-              icon: "" 
+              icon: "fas fa-book-user" 
             },{
               label: "HELP",
               url: "https://www.golfwangcommunity.com/help",
-              icon: "" 
+              icon: "fas fa-square-question" 
             }];
         break;
       case 'palacecmty.com':
@@ -147,22 +150,23 @@ function set_menu() {
         items = [{
               label: "HOME",
               url: "https://www.palacecmty.com/mobile2",
-              icon: "" 
+              icon: "fas fa-home" 
             },{
               label: "DROPLISTS",
               url: "https://www.palacecmty.com/droplists",
-              icon: "" 
+              icon: "fas fa-list-dropdown" 
             },{
               label: "COLLECTIONS",
               url: "https://www.palacecmty.com/collections",
-              icon: ""
+              icon: "fas fa-chart-tree-map"
             },{
               label: "ITEMS",
               url: "https://www.palacecmty.com/collections/all",
-              icon: ""
+              icon: "fas fa-clothes-hanger"
             },{
               label: "RESTOCKS",
-              isGrouping: true, 
+              isGrouping: true,
+              icon: "fas fa-retweet",
               subLinks: [{
                 label: "EU",
                 url: "https://www.palacecmty.com/restocks/eu",
@@ -183,11 +187,11 @@ function set_menu() {
             },{
               label: "LOOKBOOKS",
               url: "https://www.palacecmty.com/lookbooks",
-              icon: "" 
+              icon: "fas fa-book-user" 
             },{
               label: "HELP",
               url: "https://www.palacecmty.com/help",
-              icon: "" 
+              icon: "fas fa-square-question" 
             }];
         break;
       default:
