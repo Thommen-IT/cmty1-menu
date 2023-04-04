@@ -46,13 +46,13 @@ function set_menu() {
               url: "https://www.supremecommunity.com/mobile2",
               icon: "fas fa-home"
             },{
-              label: "DROPLISTS",
-              url: "https://www.supremecommunity.com/season/latest/droplists/",
-              icon: "fas fa-list-dropdown"
-            },{
               label: "ITEMS",
               url: "https://www.supremecommunity.com/season/latest/overview/",
               icon: "fas fa-clothes-hanger"
+            },{
+              label: "DROPLISTS",
+              url: "https://www.supremecommunity.com/season/latest/droplists/",
+              icon: "fas fa-list-dropdown"
             },{
               label: "LEFT TO DROP",
               url: "https://www.supremecommunity.com/season/latest/lefttodrop/",
@@ -104,6 +104,10 @@ function set_menu() {
               url: "https://www.supremecommunity.com/season/latest/overview/",
               icon: "fas fa-book-user"
             },{
+              label: "WEBSHOP",
+              url: "https://supreme.com/shop/all",
+              icon: "fas fa-shop"
+            },{
               label: "HELP",
               url: "https://www.supremecommunity.com/help/",
               icon: "fas fa-square-question"
@@ -139,6 +143,10 @@ function set_menu() {
               label: "LOOKBOOKS",
               url: "https://www.golfwangcommunity.com/lookbook/latest",
               icon: "fas fa-book-user" 
+            },{
+              label: "WEBSHOP",
+              url: "https://golfwang.com/collections/all",
+              icon: "fas fa-shop"
             },{
               label: "HELP",
               url: "https://www.golfwangcommunity.com/help",
@@ -188,6 +196,10 @@ function set_menu() {
               label: "LOOKBOOKS",
               url: "https://www.palacecmty.com/lookbooks",
               icon: "fas fa-book-user" 
+            },{
+              label: "WEBSHOP",
+              url: "https://shop.palaceskateboards.com",
+              icon: "fas fa-shop"
             },{
               label: "HELP",
               url: "https://www.palacecmty.com/help",
