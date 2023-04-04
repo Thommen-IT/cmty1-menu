@@ -15,7 +15,7 @@ function set_menu() {
             }, {
               label: "NEWS",
               isGrouping: true,
-              icon: "fas fa-newspaper-o",
+              icon: "fas fa-newspaper",
               subLinks: [{
                 label: "SUPREME",
                 url: "https://cmty.one/category/supreme/",
@@ -36,7 +36,7 @@ function set_menu() {
             },{
               label: "GALLERY",
               url: "",
-              icon: "fas fa-picture-o"
+              icon: "fas fa-images-user"
             }];
         break;
       case 'supremecommunity.com':
