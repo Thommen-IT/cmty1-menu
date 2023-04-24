@@ -228,6 +228,12 @@ if (navigator.userAgent.indexOf('cmtyone') > -1) {
       set_title(title);
     }
     set_menu();
+  
+    if (typeof freestar !== 'undefined') {
+      freestar.config.disabledProducts = {
+        googleInterstitial: true
+      };
+    }
 
     window.location.href = 'gonative://nativebridge/multi?data=' + encodeURIComponent(JSON.stringify({urls: urls}));
 }
