@@ -101,7 +101,7 @@ function set_menu() {
               }]
             },{
               label: "LOOKBOOKS",
-              url: "https://www.supremecommunity.com/season/latest/overview/",
+              url: "https://www.supremecommunity.com/season/spring-summer2023/lookbook/",
               icon: "fas fa-book-user"
             },{
               label: "WEBSHOP",
@@ -210,30 +210,36 @@ function set_menu() {
         console.log("No menu items found for this domain.")
   }
   if (items && items.length) {
-    //window.location.href="gonative://sidebar/setItems?items=" + encodeURIComponent(json);
-    urls.push("gonative://sidebar/setItems?items=" + encodeURIComponent(JSON.stringify(items)));
+      //window.location.href="gonative://sidebar/setItems?items=" + encodeURIComponent(json);
+      //urls.push("gonative://sidebar/setItems?items=" + encodeURIComponent(JSON.stringify(items)));
+      gonative.sidebar.setItems({"items":items, "enabled":true, "persist":false});     
   }
 }
 
-function set_title(title){
+function set_title(title) {
     //window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title;
-    urls.push('gonative://navigationTitles/setCurrent?title=' + encodeURIComponent(title));
+    //urls.push('gonative://navigationTitles/setCurrent?title=' + encodeURIComponent(title));
+    gonative.navigationTitles.setCurrent({title: title})
 }
 
+function gonative_library_ready() {
+    if (navigator.userAgent.indexOf('cmtyone') > -1) {
+        if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
+            var metaContent = document.querySelector('meta[name="app-title"]')?.getAttribute('content');
+            var htmlTitle = document.title.split(' -')[0];
+            var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
+            set_title(title);
+        }
+        set_menu();
+
+        //window.location.href = 'gonative://nativebridge/multi?data=' + encodeURIComponent(JSON.stringify({urls: urls}));
+    }
+}
+
+/* Vars */
 if (navigator.userAgent.indexOf('cmtyone') > -1) {
     var isAppUser = true;
-  
-    if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
-      var metaContent = document.querySelector('meta[name="app-title"]')?.getAttribute('content');
-      var htmlTitle = document.title.split(' -')[0];
-      var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
-      set_title(title);
-    }
-    set_menu();
-
-    window.location.href = 'gonative://nativebridge/multi?data=' + encodeURIComponent(JSON.stringify({urls: urls}));
 }
-
 
 
 
