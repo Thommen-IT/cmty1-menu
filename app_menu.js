@@ -217,9 +217,9 @@ function set_menu() {
 }
 
 function set_title(title) {
-    window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title;
+    //window.location.href = 'gonative://navigationTitles/setCurrent?title=' + title;
     //urls.push('gonative://navigationTitles/setCurrent?title=' + encodeURIComponent(title));
-    //gonative.navigationTitles.setCurrent({title: title})
+    gonative.navigationTitles.setCurrent({title: title})
 }
 
 function migrateTags(data) {
@@ -302,6 +302,12 @@ function migrateTagsCallbackFunction(tagResult){
 
 function gonative_library_ready() {
     if (navigator.userAgent.indexOf('cmtyone') > -1) {
+        if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
+            var metaContent = document.querySelector('meta[name="app-title"]')?.getAttribute('content');
+            var htmlTitle = document.title.split(' -')[0];
+            var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
+            set_title(title);
+        }
         set_menu();
 
         // Migrate Tag
@@ -314,16 +320,8 @@ function gonative_library_ready() {
 /* Vars */
 if (navigator.userAgent.indexOf('cmtyone') > -1) {
     var isAppUser = true;
-
-      if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
-          var metaContent = document.querySelector('meta[name="app-title"]')?.getAttribute('content');
-          var htmlTitle = document.title.split(' -')[0];
-          var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
-          set_title(title);
-      }
 }
 
 
 
     
-
