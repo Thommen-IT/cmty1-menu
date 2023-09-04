@@ -580,7 +580,7 @@ function set_menu() {
               }]
             },{
               label: "LOOKBOOKS",
-              url: "https://www.supremecommunity.com/season/spring-summer2023/lookbook/",
+              url: "https://www.supremecommunity.com/season/latest/lookbook/",
               icon: "fas fa-book-user"
             },{
               label: "WEBSHOP",
