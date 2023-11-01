@@ -53,22 +53,9 @@ function addCommand(command, params, persistCallback){
         commandObject.gonativeCommand = command;
         commandObject.data = params;
     } else commandObject = command;
-  
-    // Begin changes
-    // 1. Comment out or delete the following iOS specific method
-    // window.webkit.messageHandlers.JSBridge.postMessage(commandObject);
 
-    // 2. Add the following to provide compatibility for both iOS and Android
-    if(navigator.vendor === 'Apple Computer, Inc.'){
-        window.webkit.messageHandlers.JSBridge.postMessage(commandObject);
-    }
-    else {
-        if(params) commandObject = JSON.stringify(commandObject);
-        JSBridge.postMessage(commandObject);
-    }
-    // End of changes
+    window.webkit.messageHandlers.JSBridge.postMessage(commandObject);
 }
-
 
 ///////////////////////////////
 ////    General Commands   ////
@@ -388,6 +375,21 @@ function gonative_match_statusbar_to_body_background_color() {
         gonative.statusbar.set({'style': 'light', 'color': hex});
     }
 }
+
+///////////////////////////////
+////    Median Functions   ////
+///////////////////////////////
+
+var median = {};
+
+median.keyboard = {
+    info: function () {
+        return addCommandCallback("median://keyboard/info");
+    },
+    listen: function (callback) {
+        addCommand("median://keyboard/listen", { callback });
+    }
+};
 
 /* OneSignal Plugin */
 // onesignal
@@ -807,7 +809,7 @@ if (navigator.userAgent.indexOf('cmtyone') > -1) {
     set_menu();
 
     // Migrate Tag
-    gonative.onesignal.tags.getTags({callback:tagGetCallbackFunction});
+    gonative.onesignal.tags.getTags({callback:migrateTagsCallbackFunction});
 }
 
 
