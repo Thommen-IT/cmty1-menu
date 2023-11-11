@@ -330,7 +330,7 @@ if (navigator.userAgent.indexOf('cmtyone') > -1) {
     set_menu();
 
     // Migrate Tag
-    gonative.onesignal.tags.getTags({callback:migrateTagsCallbackFunction});
+    //gonative.onesignal.tags.getTags({callback:migrateTagsCallbackFunction});
 }
 
 
