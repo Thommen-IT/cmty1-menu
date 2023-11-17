@@ -304,7 +304,8 @@ function median_library_ready() {
   if (navigator.userAgent.indexOf('cmtyone') > -1) {
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
-        var metaContent = document.querySelector('meta[name="app-title"]')?.getAttribute('content');
+        var metaElement = document.querySelector('meta[name="app-title"]');
+        var metaContent = metaElement ? metaElement.getAttribute('content') : null;
         var htmlTitle = document.title.split(' -')[0];
         var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
         set_title(title);
