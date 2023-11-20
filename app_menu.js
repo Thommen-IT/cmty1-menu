@@ -300,7 +300,7 @@ function migrateTagsCallbackFunction(tagResult){
 
 
 
-function median_library_ready() {
+ function median_device_info() {
   if (navigator.userAgent.indexOf('cmtyone') > -1) {
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
@@ -315,7 +315,7 @@ function median_library_ready() {
       // Migrate Tag
       //median.onesignal.tags.getTags({callback:migrateTagsCallbackFunction});
   }
-}
+ }
 
 
     
