@@ -217,8 +217,8 @@ function set_menu() {
 }
 
 function set_title(title) {
-    window.location.href = 'median://navigationTitles/setCurrent?title=' + title;
-    //median.navigationTitles.setCurrent({title: title})
+    //window.location.href = 'median://navigationTitles/setCurrent?title=' + title;
+    median.navigationTitles.setCurrent({title: title})
 }
 
 
