@@ -217,105 +217,30 @@ function set_menu() {
 }
 
 function set_title(title) {
-    median.navigationTitles.setCurrent({title: title})
+    window.location.href = 'median://navigationTitles/setCurrent?title=' + title;
+    //median.navigationTitles.setCurrent({title: title})
 }
 
-function migrateTags(data) {
-    const migrationMap = {
-        'restocks_eu': {key: 'restocks_location', value: 'EU'},
-        'restocks_us': {key: 'restocks_location', value: 'US'},
-        'restocks_jp': {key: 'restocks_location', value: 'JP'}
-    };
-    
-    const defaultTags = {
-        'supreme': 1,
-        'cmty1': 1,
-        'palace': 1,
-        'golfwang': 1,
-        'restocks_filter_active': 0,
-        'restocks_location': 'US',
-        'restocks_supreme': 0,
-        'restocks_palace': 0,
-        'restocks_golfwang': 0,
-    };
-    
-    let migratedTags = {};
-    let restocksValueOne = false;
-    let restocksFilterExists = false;
-    
-    // If tags exist in data and 'cmty1' is not a key in tags
-    if (data.tags && !('cmty1' in data.tags)) {
-        for (const [oldTag, value] of Object.entries(data.tags)) {
-            // If oldTag exists in migrationMap, use the new tag
-            if (oldTag in migrationMap) {
-                if (typeof migrationMap[oldTag] === 'string') {
-                    migratedTags[migrationMap[oldTag]] = value;
-                } else if (typeof migrationMap[oldTag] === 'object' && value === 1) {
-                    migratedTags[migrationMap[oldTag].key] = migrationMap[oldTag].value;
-                    restocksValueOne = true;
-                }
-            } else if (oldTag in defaultTags || (oldTag.startsWith('restocks_filter_') && value === 1)) {
-                // If the old tag exists in defaultTags or is an active 'restocks_filter_', use the old tag
-                migratedTags[oldTag] = value;
-                // Check for any tag that starts with 'restocks_filter_' and is not 'restocks_filter_active'
-                if (oldTag.startsWith('restocks_filter_') && oldTag !== 'restocks_filter_active') {
-                    restocksFilterExists = true;
-                }
-            }
-        }
-        
-        // If any of the 'restocks_' tags was 1, set 'restocks_supreme' to 1
-        if (restocksValueOne) {
-            migratedTags['restocks_supreme'] = 1;
-        }
 
-        // If any 'restocks_filter_' exists, set 'restocks_filter_active' to 1, otherwise set it to 0
-        migratedTags['restocks_filter_active'] = restocksFilterExists ? 1 : 0;
-        
-        // Merge default tags with migrated tags
-        migratedTags = {...defaultTags, ...migratedTags};
 
-        // Migrated Tags
-
-        gonative.onesignal.tags.deleteTags();
-        gonative.onesignal.tags.setTags({tags:migratedTags});
-        console.log("Updated app install - migrate tags");
-        //return migratedTags;
-    } else if (!data.tags) {
-        // If no tags exist in data, use default tags
-        // New App Install
-        gonative.onesignal.tags.setTags({tags:defaultTags});
-        console.log("New App Install - default tags");
-        //return defaultTags;
+if (navigator.userAgent.indexOf('cmtyone') > -1) {
+    var isAppUser = true;
+    if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
+      var metaElement = document.querySelector('meta[name="app-title"]');
+      var metaContent = metaElement ? metaElement.getAttribute('content') : null;
+      var htmlTitle = document.title.split(' -')[0];
+      var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
+      set_title(title);
     }
-
-    // If 'cmty1' is a key in tags, return original data
-    // We already updated
-    console.log("We already updated. No new tags");
 }
-
-function migrateTagsCallbackFunction(tagResult){
-    migrateTags(tagResult);
-}
-
-
 
  function median_device_info() {
-  if (navigator.userAgent.indexOf('cmtyone') > -1) {
-      var isAppUser = true;
-      if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
-        var metaElement = document.querySelector('meta[name="app-title"]');
-        var metaContent = metaElement ? metaElement.getAttribute('content') : null;
-        var htmlTitle = document.title.split(' -')[0];
-        var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
-        set_title(title);
-      }
       set_menu();
   
       // Migrate Tag
       //median.onesignal.tags.getTags({callback:migrateTagsCallbackFunction});
-  }
- }
+}
+
 
 
     
