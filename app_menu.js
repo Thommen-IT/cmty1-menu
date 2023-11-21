@@ -222,23 +222,24 @@ function set_title(title) {
 }
 
 
-
-if (navigator.userAgent.indexOf('cmtyone') > -1) {
-    var isAppUser = true;
-    if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
-      var metaElement = document.querySelector('meta[name="app-title"]');
-      var metaContent = metaElement ? metaElement.getAttribute('content') : null;
-      var htmlTitle = document.title.split(' -')[0];
-      var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
-      set_title(title);
-    }
+function median_library_ready(){
+   if (navigator.userAgent.indexOf('cmtyone') > -1) {
+      var isAppUser = true;
+      if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
+        var metaElement = document.querySelector('meta[name="app-title"]');
+        var metaContent = metaElement ? metaElement.getAttribute('content') : null;
+        var htmlTitle = document.title.split(' -')[0];
+        var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
+        set_title(title);
+      }
+     set_menu();
+  }
 }
 
- function median_device_info() {
-      set_menu();
-  
-      // Migrate Tag
-      //median.onesignal.tags.getTags({callback:migrateTagsCallbackFunction});
+// Call the function manually if your page content is slow to load and
+// expose the median_library_ready() function, e.g. using a web framework
+if(window.median){
+	window.median_library_ready();
 }
 
 
