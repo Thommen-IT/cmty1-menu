@@ -1,6 +1,8 @@
 /* CMTY1 Menu Code */
 
 var urls = [];
+var isSetupComplete = false;
+
 function set_menu() {
   var host = window.location.host;
   var items = "[]";
@@ -223,6 +225,7 @@ function set_title(title) {
 
 
 function median_library_ready(){
+   if (isSetupComplete) return;
    if (navigator.userAgent.indexOf('cmtyone') > -1) {
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
@@ -233,6 +236,7 @@ function median_library_ready(){
         set_title(title);
       }
      set_menu();
+     isSetupComplete = true;
   }
 }
 
