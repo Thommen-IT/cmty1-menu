@@ -250,6 +250,14 @@ if(window.median){
 	window.median_library_ready();
 }
 
+// Check if the hash does not include 'google_vignette' - vignette ads
+window.addEventListener('hashchange', function() {
+    if (!window.location.hash.includes('google_vignette')) {
+        console.log('#google_vignette has been removed from the URL hash');
+     	prepare_title();
+    } 
+});
+
 
 
     
