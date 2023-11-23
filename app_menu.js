@@ -223,17 +223,21 @@ function set_title(title) {
     median.navigationTitles.setCurrent({title: title})
 }
 
+function prepare_title() {
+    var metaElement = document.querySelector('meta[name="app-title"]');
+    var metaContent = metaElement ? metaElement.getAttribute('content') : null;
+    var htmlTitle = document.title.split(' -')[0];
+    var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
+    set_title(title);
+}
+
 
 function median_library_ready(){
    if (isSetupComplete) return;
    if (navigator.userAgent.indexOf('cmtyone') > -1) {
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one") { 
-        var metaElement = document.querySelector('meta[name="app-title"]');
-        var metaContent = metaElement ? metaElement.getAttribute('content') : null;
-        var htmlTitle = document.title.split(' -')[0];
-        var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
-        set_title(title);
+     	prepare_title();
       }
      set_menu();
      isSetupComplete = true;
