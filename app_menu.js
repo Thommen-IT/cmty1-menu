@@ -231,10 +231,30 @@ function prepare_title() {
     set_title(title);
 }
 
+/* In-App Messaging (IAM) */
+function handlerIamFunction(data) {
+    try {
+	window.alert(JSON.stringify(data));
+    } catch (error) {
+	window.alert(error);
+    }
+}
+
+
+/* Get Trigger Value - Called by OneSignal Plugin */
+function median_iam_trigger_value(data) {
+    try {
+	window.alert(JSON.stringify(data));
+    } catch (error) {
+	window.alert(error);
+    }
+}
+
 
 function median_library_ready(){
    if (isSetupComplete) return;
    if (navigator.userAgent.indexOf('cmtyone') > -1) {
+   	median.onesignal.iam.setInAppMessageClickHandler('handlerIamFunction')
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") { 
      	prepare_title();
