@@ -246,8 +246,8 @@ function saveIAMInteraction(data) {
 // Handler for IAM response
 function iamResponseHandler(data) {
     try {
-        const responseData = JSON.parse(data); // Assuming 'data' is a string; adjust if already an object
-        saveIAMInteraction(responseData);
+	window.alert(JSON.stringify(data));
+        saveIAMInteraction(data);
     } catch (error) {
         console.error('Error in IAM response:', error);
     }
