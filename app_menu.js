@@ -232,29 +232,62 @@ function prepare_title() {
 }
 
 /* In-App Messaging (IAM) */
-function handlerIamFunction(data) {
+// Function to save IAM interaction to localStorage
+function saveIAMInteraction(data) {
+    const interactionData = {
+        type: data.clickName, // Interaction type (e.g., pushAllow, pushLater, pushClosed)
+        firstClick: data.firstClick === "true",
+        closed: data.closeMessage === "true",
+        timestamp: new Date().getTime()
+    };
+    localStorage.setItem('iamPrompt', JSON.stringify(interactionData));
+}
+
+// Handler for IAM response
+function iamResponseHandler(data) {
     try {
-	window.alert(JSON.stringify(data));
+        const responseData = JSON.parse(data); // Assuming 'data' is a string; adjust if already an object
+        saveIAMInteraction(responseData);
     } catch (error) {
-	window.alert(error);
+        console.error('Error in IAM response:', error);
     }
 }
 
+// Check if IAM prompt should be shown
+function checkIAMPrompt() {
+    const interaction = localStorage.getItem('iamPrompt');
+    if (!interaction) return true; // No previous interaction, show prompt
 
-/* Get Trigger Value - Called by OneSignal Plugin */
-function median_iam_trigger_value(data) {
-    try {
-	window.alert(JSON.stringify(data));
-    } catch (error) {
-	window.alert(error);
+    const { type, timestamp } = JSON.parse(interaction);
+    const elapsedDays = (new Date().getTime() - timestamp) / (1000 * 3600 * 24);
+
+    // Logic to determine if the prompt should be shown again
+    if ((type === 'pushLater' && elapsedDays >= 7) || (type === 'pushClosed' && elapsedDays >= 14)) {
+        return true;
+    }
+    return false;
+}
+
+// Trigger the IAM prompt based on conditions
+function triggerIAM() {
+    if (checkIAMPrompt()) {
+        median.onesignal.iam.addTrigger({'showPrompt': true});
+    } else {
+        median.onesignal.iam.addTrigger({'showPrompt': false});
     }
 }
+
+// Manually trigger the IAM prompt, e.g., from settings page
+function manualTriggerIAM() {
+    median.onesignal.iam.addTrigger({'showPrompt': true});
+}
+/* End In-App Messaging (IAM) */
 
 
 function median_library_ready(){
    if (isSetupComplete) return;
    if (navigator.userAgent.indexOf('cmtyone') > -1) {
-   	median.onesignal.iam.setInAppMessageClickHandler('handlerIamFunction')
+      median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler')
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") { 
      	prepare_title();
