@@ -237,9 +237,10 @@ function saveIAMInteraction(data) {
     const interactionData = {
         type: data.clickName, // Interaction type (e.g., pushAllow, pushLater, pushClosed)
         firstClick: data.firstClick === "true",
-        closed: data.closeMessage === "true",
+        closed: data.closesMessage === "true",
         timestamp: new Date().getTime()
     };
+    window.alert(JSON.stringify(interactionData));
     localStorage.setItem('iamPrompt', JSON.stringify(interactionData));
 }
 
