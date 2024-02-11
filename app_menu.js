@@ -272,15 +272,15 @@ function checkIAMPrompt() {
 // Trigger the IAM prompt based on conditions
 function triggerIAM() {
     if (checkIAMPrompt()) {
-        median.onesignal.iam.addTrigger({'showPrompt': true});
+        median.onesignal.iam.addTrigger({'showPrompt': 'true'});
     } else {
-        median.onesignal.iam.addTrigger({'showPrompt': false});
+        median.onesignal.iam.addTrigger({'showPrompt': 'false'});
     }
 }
 
 // Manually trigger the IAM prompt, e.g., from settings page
 function manualTriggerIAM() {
-    median.onesignal.iam.addTrigger({'showPrompt': true});
+    median.onesignal.iam.addTrigger({'showPrompt': 'true'});
 }
 /* End In-App Messaging (IAM) */
 
