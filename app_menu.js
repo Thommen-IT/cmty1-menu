@@ -288,7 +288,9 @@ function manualTriggerIAM() {
 function median_library_ready(){
    if (isSetupComplete) return;
    if (navigator.userAgent.indexOf('cmtyone') > -1) {
-      median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler')
+      median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
+      triggerIAM();
+	   
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") { 
      	prepare_title();
