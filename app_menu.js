@@ -264,47 +264,13 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 /* End Onesignal */
 
 /* In-App Messaging (IAM) */
-
-function saveIAMInteraction(data) {
-    const interactionType = data.clickName; // pushAllow, pushLater, pushClosed
-    const timestamp = new Date().getTime().toString();
-    const combinedTagValue = `${interactionType},${timestamp}`;
-
-    median.onesignal.tags.setTags({ iam_interaction: combinedTagValue })
-        .then(function(tagResult) {
-            console.log('IAM interaction saved with a single tag:' + JSON.stringify(tagResult));
-        })
-        .catch(function(error) {
-            console.log('Error setting IAM interaction tag:' + JSON.stringify(error));
-        });
-}
-
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
-    // Proceed with tag checks only if user is not subscribed or permission is not authorized
     if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
-        median.onesignal.tags.getTags().then(function(tagResult) {
-            if (tagResult.tags && tagResult.tags.iam_interaction) {
-                const [iamType, iamTimestamp] = tagResult.tags.iam_interaction.split(',');
-                const elapsedDays = (new Date().getTime() - parseInt(iamTimestamp)) / (1000 * 3600 * 24);
-
-                let showIAM = false;
-                // Check time only if iamType is 'pushLater' and more than 7 days have elapsed
-                if (iamType === 'pushLater' && elapsedDays >= 7) {
-                    showIAM = true;
-                }
-
-                triggerIAM(showIAM);
-            } else {
-                // No previous interaction or tag not found, show the prompt
-                triggerIAM(true);
-            }
-        }).catch(function(error) {
-            console.log('CMTY1: Error getting IAM interaction tag:' + JSON.stringify(error));
-            triggerIAM(true); // Default action if there's an error fetching the tag
-        });
+        console.log('CMTY1: OneSignal user NOT subscribed or authorized. Need to trigger IAM.');
+        triggerIAM(true);
     } else {
         console.log('CMTY1: OneSignal user already subscribed and permission authorized. No need to trigger IAM.');
-        // No action needed if the user is subscribed and permission is authorized
+	triggerIAM(false);
     }
 }
 
@@ -322,7 +288,6 @@ function triggerIAM(showIAM) {
 // Handler for IAM response
 function iamResponseHandler(data) {
     try {
-        saveIAMInteraction(data);
         median.onesignal.onesignalInfo().then(oneSignalInfo => {
             console.log('CMTY1: OneSignal info manual send:' + JSON.stringify(oneSignalInfo));	
             sendOneSignalInfoToServer(oneSignalInfo);
