@@ -265,6 +265,10 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
+    if (!oneSignalInfo.isFirstLaunch) {
+        console.log('CMTY1: Not first launch. Skipping IAM prompt.');
+        return;
+    }
     if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
         console.log('CMTY1: OneSignal user NOT subscribed or authorized. Need to trigger IAM.');
         triggerIAM(true);
