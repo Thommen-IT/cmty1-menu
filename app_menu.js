@@ -240,15 +240,26 @@ function saveIAMInteraction(data) {
         closed: data.closesMessage === "true",
         timestamp: new Date().getTime()
     };
-    window.alert(JSON.stringify(interactionData));
     localStorage.setItem('iamPrompt', JSON.stringify(interactionData));
 }
 
 // Handler for IAM response
 function iamResponseHandler(data) {
     try {
-	window.alert(JSON.stringify(data));
+        // Save IAM interaction data to localStorage for any response type
         saveIAMInteraction(data);
+
+        // Update OneSignal information
+        median.onesignal.onesignalInfo().then(oneSignalInfo => {
+            fetch('/api/register-push', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(oneSignalInfo)
+            })
+            .then(response => response.ok ? response.json() : Promise.reject('Failed to send data'))
+            .then(data => console.log('Success:', data))
+            .catch(error => console.error('Error:', error));
+        });
     } catch (error) {
         console.error('Error in IAM response:', error);
     }
