@@ -220,7 +220,7 @@ function set_menu() {
 
 function set_title(title) {
     //window.location.href = 'median://navigationTitles/setCurrent?title=' + title;
-    median.navigationTitles.setCurrent({title: title})
+    median.navigationTitles.setCurrent({title: title});
 }
 
 function prepare_title() {
@@ -242,7 +242,7 @@ function generateOneSignalInfoHash(oneSignalInfo) {
 
 function sendOneSignalInfoToServer(oneSignalInfo) {
     const newHash = generateOneSignalInfoHash(oneSignalInfo);
-    console.log('CMTY1: OneSignal info hash:', newHash);
+    console.log('CMTY1: OneSignal info hash: ' + newHash);
     const endpoint = 'https://baff-2a02-168-f1f6-1-fc41-68da-9ed3-6973.ngrok-free.app/api/register-push';
 
     fetch(endpoint, {
@@ -258,8 +258,8 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
         }
         return response.json();
     })
-    .then(data => console.log({'CMTY1: OneSignal info sent successfully:', data}))
-    .catch(error => console.error({'CMTY1: Error sending OneSignal info:', error}));
+    .then(data => console.log('CMTY1: OneSignal info sent successfully:' + JSON.stringify(data)))
+    .catch(error => console.log('CMTY1: Error sending OneSignal info:' + JSON.stringify(error)));
 }
 /* End Onesignal */
 
@@ -272,10 +272,10 @@ function saveIAMInteraction(data) {
 
     median.onesignal.tags.setTags({ iam_interaction: combinedTagValue })
         .then(function(tagResult) {
-            console.log({'IAM interaction saved with a single tag:', tagResult});
+            console.log('IAM interaction saved with a single tag:' + JSON.stringify(tagResult));
         })
         .catch(function(error) {
-            console.error({'Error setting IAM interaction tag:', error});
+            console.log('Error setting IAM interaction tag:' + JSON.stringify(error));
         });
 }
 
@@ -299,7 +299,7 @@ function checkAndTriggerIAMPrompt(oneSignalInfo) {
                 triggerIAM(true);
             }
         }).catch(function(error) {
-            console.error({'CMTY1: Error getting IAM interaction tag:', error});
+            console.log('CMTY1: Error getting IAM interaction tag:' + JSON.stringify(error));
             triggerIAM(true); // Default action if there's an error fetching the tag
         });
     } else {
@@ -324,11 +324,11 @@ function iamResponseHandler(data) {
     try {
         saveIAMInteraction(data);
         median.onesignal.onesignalInfo().then(oneSignalInfo => {
-            console.log({'CMTY1: OneSignal info manual send:', oneSignalInfo})	
+            console.log('CMTY1: OneSignal info manual send:' + JSON.stringify(oneSignalInfo));	
             sendOneSignalInfoToServer(oneSignalInfo);
         });
     } catch (error) {
-        console.error('Error in IAM response:', error);
+        console.log('Error in IAM response:' + JSON.stringify(error));
     }
 }
 
@@ -350,7 +350,7 @@ function median_library_ready(){
 }
 
 function median_onesignal_info(oneSignalInfo) {
-    console.log({CMTY1: Received OneSignal Info:', oneSignalInfo});
+    console.log('CMTY1: Received OneSignal Info:' + JSON.stringify(oneSignalInfo));
     sendOneSignalInfoToServer(oneSignalInfo);
     median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
     checkAndTriggerIAMPrompt(oneSignalInfo);
