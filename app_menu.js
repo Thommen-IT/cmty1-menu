@@ -231,6 +231,38 @@ function prepare_title() {
     set_title(title);
 }
 
+/* Onesignal */
+function generateOneSignalInfoHash(oneSignalInfo) {
+    return JSON.stringify(oneSignalInfo).split('').reduce((hash, char) => {
+        const chr = char.charCodeAt(0);
+        hash = (hash << 5) - hash + chr;
+        return hash & hash;
+    }, 0).toString();
+}
+
+function sendOneSignalInfoToServer(oneSignalInfo) {
+    const newHash = generateOneSignalInfoHash(oneSignalInfo);
+    console.log('CMTY1: OneSignal info hash:', newHash);
+    const endpoint = 'https://baff-2a02-168-f1f6-1-fc41-68da-9ed3-6973.ngrok-free.app/api/register-push';
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(oneSignalInfo)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => console.log('CMTY1: OneSignal info sent successfully:', data))
+    .catch(error => console.error('CMTY1: Error sending OneSignal info:', error));
+}
+/* End Onesignal */
+
 /* In-App Messaging (IAM) */
 // Function to save IAM interaction to localStorage
 function saveIAMInteraction(data) {
@@ -246,19 +278,10 @@ function saveIAMInteraction(data) {
 // Handler for IAM response
 function iamResponseHandler(data) {
     try {
-        // Save IAM interaction data to localStorage for any response type
         saveIAMInteraction(data);
-
-        // Update OneSignal information
         median.onesignal.onesignalInfo().then(oneSignalInfo => {
-            fetch('/api/register-push', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(oneSignalInfo)
-            })
-            .then(response => response.ok ? response.json() : Promise.reject('Failed to send data'))
-            .then(data => console.log('Success:', data))
-            .catch(error => console.error('Error:', error));
+            console.log('CMTY1: OneSignal info manual send:', oneSignalInfo)	
+            sendOneSignalInfoToServer(oneSignalInfo);
         });
     } catch (error) {
         console.error('Error in IAM response:', error);
@@ -310,6 +333,12 @@ function median_library_ready(){
      isSetupComplete = true;
   }
 }
+
+function median_onesignal_info(oneSignalInfo) {
+    console.log('Received OneSignal Info:', oneSignalInfo);
+    sendOneSignalInfoToServer(oneSignalInfo);
+}
+
 
 // Call the function manually if your page content is slow to load and
 // expose the median_library_ready() function, e.g. using a web framework
