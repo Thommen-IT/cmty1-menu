@@ -258,8 +258,8 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
         }
         return response.json();
     })
-    .then(data => console.log('CMTY1: OneSignal info sent successfully:', data))
-    .catch(error => console.error('CMTY1: Error sending OneSignal info:', error));
+    .then(data => console.log({'CMTY1: OneSignal info sent successfully:', data}))
+    .catch(error => console.error({'CMTY1: Error sending OneSignal info:', error}));
 }
 /* End Onesignal */
 
@@ -280,7 +280,7 @@ function iamResponseHandler(data) {
     try {
         saveIAMInteraction(data);
         median.onesignal.onesignalInfo().then(oneSignalInfo => {
-            console.log('CMTY1: OneSignal info manual send:', oneSignalInfo)	
+            console.log({'CMTY1: OneSignal info manual send:', oneSignalInfo})	
             sendOneSignalInfoToServer(oneSignalInfo);
         });
     } catch (error) {
@@ -335,7 +335,7 @@ function median_library_ready(){
 }
 
 function median_onesignal_info(oneSignalInfo) {
-    console.log('Received OneSignal Info:', oneSignalInfo);
+    console.log({CMTY1: Received OneSignal Info:', oneSignalInfo});
     sendOneSignalInfoToServer(oneSignalInfo);
 }
 
