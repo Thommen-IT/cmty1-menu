@@ -265,10 +265,12 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
-    if (!oneSignalInfo.isFirstLaunch) {
-        console.log('CMTY1: Not first launch. Skipping IAM prompt.');
-        return;
+    var startDomain = "www.cmtyone.com";
+    if (window.location.hostname !== startDomain || localStorage.getItem('iamPromptShown')) {
+        console.log('CMTY1: Either not the new install domain or IAM prompt already shown. Skipping IAM prompt.');
+        return; 
     }
+
     if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
         console.log('CMTY1: OneSignal user NOT subscribed or authorized. Need to trigger IAM.');
         triggerIAM(true);
@@ -291,6 +293,7 @@ function triggerIAM(showIAM) {
 
 // Handler for IAM response
 function iamResponseHandler(data) {
+    localStorage.setItem('iamPromptShown', 'true');
     try {
         median.onesignal.onesignalInfo().then(oneSignalInfo => {
             console.log('CMTY1: OneSignal info manual send:' + JSON.stringify(oneSignalInfo));	
