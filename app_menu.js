@@ -265,7 +265,7 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
-    var startDomain = "www.cmtyone.com";
+    var startDomain = "cmtyone.com";
     if (window.location.hostname !== startDomain || localStorage.getItem('iamPromptShown')) {
         console.log('CMTY1: Either not the new install domain or IAM prompt already shown. Skipping IAM prompt.');
         return; 
