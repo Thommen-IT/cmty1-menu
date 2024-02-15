@@ -264,9 +264,7 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 }
 
 document.addEventListener('OneSignalInfoUpdate', () => {
-    window.alert("event listener OneSignalInfoUpdate");
     median.onesignal.run.onesignalInfo();
-    window.median.onesignal.run.onesignalInfo();
 });
 /* End Onesignal */
 
