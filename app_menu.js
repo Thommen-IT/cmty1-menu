@@ -301,6 +301,7 @@ function checkAndTriggerIAMPrompt(oneSignalInfo) {
 
 // Trigger the IAM prompt based on conditions
 function triggerIAM(showIAM) {
+    console.log('CMTY1: triggerIAM showPrompt: '+showIAM);
     if (showIAM) {
         median.onesignal.iam.addTrigger({'showPrompt': 'true'});
     } else {
