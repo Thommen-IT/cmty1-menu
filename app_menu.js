@@ -321,11 +321,8 @@ function iamResponseHandler(data) {
         };
 	    
         localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
-        console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));	
-        median.onesignal.onesignalInfo().then(oneSignalInfo => {
-            console.log('CMTY1: OneSignal info manual send:' + JSON.stringify(oneSignalInfo));	
-            sendOneSignalInfoToServer(oneSignalInfo);
-        });
+        console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));
+    	median.onesignal.run.onesignalInfo();
     } catch (error) {
         console.log('Error in IAM response: '+ JSON.stringify(error));
     }
