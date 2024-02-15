@@ -266,18 +266,36 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
     var startDomain = "cmtyone.com";
-    if (window.location.hostname !== startDomain || localStorage.getItem('iamPromptShown')) {
-        console.log('CMTY1: Either not the new install domain or IAM prompt already shown. Skipping IAM prompt.');
-        return; 
+    var iamDetails = localStorage.getItem('iamPromptDetails');
+    var details = iamDetails ? JSON.parse(iamDetails) : null;
+
+    // Check if on the start domain
+    if (window.location.hostname === startDomain) {
+        if (!details) {
+            if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
+                console.log('CMTY1: First visit without IAM interaction recorded. Showing IAM prompt.');
+                triggerIAM(true);
+                return;
+            }
+        } else if (details.interactionType === "pushLater") {
+            // It's been previously shown with "pushLater". Check if it's time to show it again
+            const daysSinceLastPrompt = (Date.now() - details.timestamp) / (1000 * 60 * 60 * 24);
+            if (daysSinceLastPrompt >= 7) {
+                // Enough time has passed since "pushLater" was selected
+                console.log('CMTY1: "PushLater" selected and 7 days passed. Showing IAM prompt again.');
+                triggerIAM(true);
+                return;
+            } else {
+                console.log('CMTY1: "PushLater" selected but not enough time has passed. Skipping IAM prompt.');
+                triggerIAM(false);
+                return;
+            }
+        }
+        triggerIAM(false);
     }
 
-    if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
-        console.log('CMTY1: OneSignal user NOT subscribed or authorized. Need to trigger IAM.');
-        triggerIAM(true);
-    } else {
-        console.log('CMTY1: OneSignal user already subscribed and permission authorized. No need to trigger IAM.');
-	triggerIAM(false);
-    }
+    console.log('CMTY1: Conditions for showing IAM prompt not met.');
+    triggerIAM(false);
 }
 
 
@@ -293,14 +311,19 @@ function triggerIAM(showIAM) {
 
 // Handler for IAM response
 function iamResponseHandler(data) {
-    localStorage.setItem('iamPromptShown', 'true');
     try {
+        const interactionData = {
+            interactionType: data.clickName,
+            timestamp: Date.now()
+        };
+        localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
+
         median.onesignal.onesignalInfo().then(oneSignalInfo => {
-            console.log('CMTY1: OneSignal info manual send:' + JSON.stringify(oneSignalInfo));	
+            console.log('CMTY1: OneSignal info manual send:', JSON.stringify(oneSignalInfo));	
             sendOneSignalInfoToServer(oneSignalInfo);
         });
     } catch (error) {
-        console.log('Error in IAM response:' + JSON.stringify(error));
+        console.log('Error in IAM response: '+ JSON.stringify(error));
     }
 }
 
