@@ -318,10 +318,11 @@ function iamResponseHandler(data) {
             interactionType: data.clickName,
             timestamp: Date.now()
         };
+	    
         localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
-
+        console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));	
         median.onesignal.onesignalInfo().then(oneSignalInfo => {
-            console.log('CMTY1: OneSignal info manual send:', JSON.stringify(oneSignalInfo));	
+            console.log('CMTY1: OneSignal info manual send:' + JSON.stringify(oneSignalInfo));	
             sendOneSignalInfoToServer(oneSignalInfo);
         });
     } catch (error) {
