@@ -266,6 +266,8 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
+    median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
+
     var startDomain = "cmtyone.com";
     var iamDetails = localStorage.getItem('iamPromptDetails');
     var details = iamDetails ? JSON.parse(iamDetails) : null;
@@ -313,6 +315,7 @@ function triggerIAM(showIAM) {
 
 // Handler for IAM response
 function iamResponseHandler(data) {
+    console.log('CMTY1: OneSignal iamResponseHandler');	
     try {
         const interactionData = {
             interactionType: data.clickName,
@@ -350,7 +353,6 @@ function median_library_ready(){
 function median_onesignal_info(oneSignalInfo) {
     console.log('CMTY1: Received OneSignal Info:' + JSON.stringify(oneSignalInfo));
     sendOneSignalInfoToServer(oneSignalInfo);
-    median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
     checkAndTriggerIAMPrompt(oneSignalInfo);
 }
 
