@@ -320,12 +320,14 @@ async function iamResponseHandler(data) {
             interactionType: data.clickName,
             timestamp: Date.now()
         };
-	    
-        localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
-        console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));
+
+    	console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));
         setTimeout(() => {
         	median.onesignal.run.onesignalInfo();
-	}, 0);
+	}, 50);
+	    
+        localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
+        
     } catch (error) {
         console.log('Error in IAM response: '+ JSON.stringify(error));
     }
