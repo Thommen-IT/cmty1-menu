@@ -312,7 +312,7 @@ function triggerIAM(showIAM) {
 
 
 // Handler for IAM response
-function iamResponseHandler(data) {
+async function iamResponseHandler(data) {
     console.log('CMTY1: OneSignal iamResponseHandler');	
     try {
         const interactionData = {
@@ -322,8 +322,8 @@ function iamResponseHandler(data) {
 	    
         localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
         console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));
-    	median.onesignal.run.onesignalInfo();
-    	window.alert("after iamresponsehandler");
+    	const oneSignalInfo = await median.onesignal.onesignalInfo();
+    	sendOneSignalInfoToServer(oneSignalInfo);
     } catch (error) {
         console.log('Error in IAM response: '+ JSON.stringify(error));
     }
