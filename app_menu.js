@@ -263,6 +263,13 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
     .catch(error => console.log('CMTY1: Error sending OneSignal info:' + JSON.stringify(error)));
 }
 
+// Callback when push on backend registered
+function cmty_push_registered() {
+    median.onesignal.onesignalInfo().then(function (oneSignalInfo) {
+        sendOneSignalInfoToServer(oneSignalInfo);
+    });
+}
+
 /* End Onesignal */
 
 /* In-App Messaging (IAM) */
@@ -311,17 +318,6 @@ function triggerIAM(showIAM) {
     }
 }
 
-document.addEventListener('OneSignalIAMSelected', async (event) => {
-    console.log('OneSignalIAMSelected event received:'+ event.detail);
-    try {
-        const oneSignalInfo = await median.onesignal.onesignalInfo();
-        console.log('OneSignal info fetched:'+ JSON.stringify(oneSignalInfo));
-        sendOneSignalInfoToServer(oneSignalInfo);
-    } catch (error) {
-        console.error('Failed to fetch OneSignal info:', error);
-    }
-});
-
 // Handler for IAM response
 function iamResponseHandler(data) {
     console.log('CMTY1: OneSignal iamResponseHandler');	
@@ -332,8 +328,9 @@ function iamResponseHandler(data) {
         };
 
         localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
-      	// Dispatch a custom event after storing interaction details
-        document.dispatchEvent(new CustomEvent('OneSignalIAMSelected', { detail: interactionData }));
+	median.onesignal.onesignalInfo().then(function (oneSignalInfo) {
+            sendOneSignalInfoToServer(oneSignalInfo);
+	});
     } catch (error) {
         console.log('Error in IAM response: '+ JSON.stringify(error));
     }
@@ -341,8 +338,6 @@ function iamResponseHandler(data) {
 
 
 /* End In-App Messaging (IAM) */
-
-
 function median_library_ready(){
    console.log('CMTY1: median_library_ready');	   
    median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
@@ -378,7 +373,3 @@ window.addEventListener('hashchange', function() {
      	prepare_title();
     } 
 });
-
-
-
-    
