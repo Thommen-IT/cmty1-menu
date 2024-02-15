@@ -241,9 +241,10 @@ function generateOneSignalInfoHash(oneSignalInfo) {
 }
 
 function sendOneSignalInfoToServer(oneSignalInfo) {
-    const newHash = generateOneSignalInfoHash(oneSignalInfo);
-    console.log('CMTY1: OneSignal info hash: ' + newHash);
+    //const newHash = generateOneSignalInfoHash(oneSignalInfo);
+    //console.log('CMTY1: OneSignal info hash: ' + newHash);
     const endpoint = 'https://baff-2a02-168-f1f6-1-fc41-68da-9ed3-6973.ngrok-free.app/api/register-push';
+    console.log('CMTY1: OneSignal info sending:' + JSON.stringify(oneSignalInfo));
 
     fetch(endpoint, {
         method: 'POST',
