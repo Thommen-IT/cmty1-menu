@@ -313,7 +313,7 @@ function triggerIAM(showIAM) {
 
 
 // Handler for IAM response
-async function iamResponseHandler(data) {
+function iamResponseHandler(data) {
     console.log('CMTY1: OneSignal iamResponseHandler');	
     try {
         const interactionData = {
