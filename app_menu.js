@@ -266,8 +266,6 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
 
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
-    median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
-
     var startDomain = "cmtyone.com";
     var iamDetails = localStorage.getItem('iamPromptDetails');
     var details = iamDetails ? JSON.parse(iamDetails) : null;
@@ -308,7 +306,7 @@ function triggerIAM(showIAM) {
     if (showIAM) {
         median.onesignal.iam.addTrigger({'showPrompt': 'true'});
     } else {
-        median.onesignal.iam.addTrigger({'showPrompt': 'false'});
+        median.onesignal.iam.removeTriggerForKey('showPrompt');
     }
 }
 
@@ -340,7 +338,8 @@ function iamResponseHandler(data) {
 function median_library_ready(){
    if (isSetupComplete) return;
    if (navigator.userAgent.indexOf('cmtyone') > -1) {
-	   
+      median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
+
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") { 
      	prepare_title();
