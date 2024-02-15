@@ -323,6 +323,7 @@ function iamResponseHandler(data) {
         localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
         console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));
     	median.onesignal.run.onesignalInfo();
+    	window.alert("after iamresponsehandler");
     } catch (error) {
         console.log('Error in IAM response: '+ JSON.stringify(error));
     }
