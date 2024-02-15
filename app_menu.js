@@ -241,9 +241,25 @@ function generateOneSignalInfoHash(oneSignalInfo) {
 }
 
 function sendOneSignalInfoToServer(oneSignalInfo) {
+    // TODO Check hash if settings changed
     //const newHash = generateOneSignalInfoHash(oneSignalInfo);
     //console.log('CMTY1: OneSignal info hash: ' + newHash);
+	
     const endpoint = 'https://baff-2a02-168-f1f6-1-fc41-68da-9ed3-6973.ngrok-free.app/api/register-push';
+
+    try {
+        // Attempt to retrieve IAM interaction details from localStorage
+        const iamDetailsJson = localStorage.getItem('iamPromptDetails');
+        if (iamDetailsJson) {
+            const iamDetails = JSON.parse(iamDetailsJson);
+            
+            oneSignalInfo.iamInteractionAction = iamDetails.interactionType;
+            oneSignalInfo.iamInteractionTimestamp = iamDetails.timestamp;
+        }
+    } catch (error) {
+        console.error('Error appending IAM interaction details to OneSignal info:', error);
+    }
+	
     console.log('CMTY1: OneSignal info sending:' + JSON.stringify(oneSignalInfo));
 
     fetch(endpoint, {
