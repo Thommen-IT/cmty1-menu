@@ -263,9 +263,6 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
     .catch(error => console.log('CMTY1: Error sending OneSignal info:' + JSON.stringify(error)));
 }
 
-document.addEventListener('OneSignalInfoUpdate', () => {
-    median.onesignal.run.onesignalInfo();
-});
 /* End Onesignal */
 
 /* In-App Messaging (IAM) */
@@ -326,7 +323,9 @@ async function iamResponseHandler(data) {
 	    
         localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
         console.log('CMTY1: OneSignal before info manual send: ' +JSON.stringify(interactionData));
-        document.dispatchEvent(new CustomEvent('OneSignalInfoUpdate'));
+        setTimeout(() => {
+        	median.onesignal.run.onesignalInfo();
+	}, 0);
     } catch (error) {
         console.log('Error in IAM response: '+ JSON.stringify(error));
     }
