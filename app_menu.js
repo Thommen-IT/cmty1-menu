@@ -313,6 +313,7 @@ function triggerIAM(showIAM) {
 
 // Handler for IAM response
 function iamResponseHandler(data) {
+    window.alert(JSON.stringify(data));
     console.log('CMTY1: OneSignal iamResponseHandler');	
     try {
         const interactionData = {
@@ -336,10 +337,13 @@ function iamResponseHandler(data) {
 
 
 function median_library_ready(){
+	console.log('CMTY1: median_library_ready');	   
+
    if (isSetupComplete) return;
    if (navigator.userAgent.indexOf('cmtyone') > -1) {
+console.log('CMTY1: before setInAppMessageClickHandler');	   
       median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
-
+console.log('CMTY1: after setInAppMessageClickHandler');	   
       var isAppUser = true;
       if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") { 
      	prepare_title();
