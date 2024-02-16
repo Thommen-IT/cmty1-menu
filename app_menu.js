@@ -256,7 +256,7 @@ function generateSelectiveOneSignalInfoHash(oneSignalInfo) {
 }
 
 function sendOneSignalInfoToServer(oneSignalInfo) {	
-    const endpoint = 'https://baff-2a02-168-f1f6-1-fc41-68da-9ed3-6973.ngrok-free.app/api/register-push';
+    const endpoint = 'https://app.cmty.one/api/register-push';
 
     try {
         // Attempt to retrieve IAM interaction details from localStorage
