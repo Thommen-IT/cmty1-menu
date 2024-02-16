@@ -2,6 +2,8 @@
 
 var urls = [];
 var isSetupComplete = false;
+var startDomain = "cmtyone.com";
+
 
 function set_menu() {
   var host = window.location.host;
@@ -232,19 +234,28 @@ function prepare_title() {
 }
 
 /* Onesignal */
-function generateOneSignalInfoHash(oneSignalInfo) {
-    return JSON.stringify(oneSignalInfo).split('').reduce((hash, char) => {
-        const chr = char.charCodeAt(0);
-        hash = (hash << 5) - hash + chr;
-        return hash & hash;
-    }, 0).toString();
+function generateSelectiveOneSignalInfoHash(oneSignalInfo) {
+    const keysToInclude = ['osVersion', 'appBuild', 'appVersion', 'oneSignalNotificationPermissionStatus', 'oneSignalSubscribed', 'oneSignalNotificationsEnabled', 'installationId'];
+
+    const filteredInfo = {};
+    keysToInclude.forEach(key => {
+        if (oneSignalInfo.hasOwnProperty(key)) {
+            filteredInfo[key] = oneSignalInfo[key];
+        }
+    });
+
+    // Convert this filtered object to a string, ensuring key order consistency
+    const str = JSON.stringify(filteredInfo, Object.keys(filteredInfo).sort());
+    let hash = 0, i, chr;
+    for (i = 0; i < str.length; i++) {
+        chr   = str.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash.toString();
 }
 
-function sendOneSignalInfoToServer(oneSignalInfo) {
-    // TODO Check hash if settings changed
-    //const newHash = generateOneSignalInfoHash(oneSignalInfo);
-    //console.log('CMTY1: OneSignal info hash: ' + newHash);
-	
+function sendOneSignalInfoToServer(oneSignalInfo) {	
     const endpoint = 'https://baff-2a02-168-f1f6-1-fc41-68da-9ed3-6973.ngrok-free.app/api/register-push';
 
     try {
@@ -279,6 +290,8 @@ function sendOneSignalInfoToServer(oneSignalInfo) {
     .catch(error => console.log('CMTY1: Error sending OneSignal info:' + JSON.stringify(error)));
 }
 
+
+
 // Callback when push on backend registered
 function cmty_push_registered() {
     median.onesignal.onesignalInfo().then(function (oneSignalInfo) {
@@ -290,34 +303,30 @@ function cmty_push_registered() {
 
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
-    var startDomain = "cmtyone.com";
     var iamDetails = localStorage.getItem('iamPromptDetails');
     var details = iamDetails ? JSON.parse(iamDetails) : null;
 
-    // Check if on the start domain
-    if (window.location.hostname === startDomain) {
-        if (!details) {
-            if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
-                console.log('CMTY1: First visit without IAM interaction recorded. Showing IAM prompt.');
-                triggerIAM(true);
-                return;
-            }
-        } else if (details.interactionType === "pushLater") {
-            // It's been previously shown with "pushLater". Check if it's time to show it again
-            const daysSinceLastPrompt = (Date.now() - details.timestamp) / (1000 * 60 * 60 * 24);
-            if (daysSinceLastPrompt >= 7) {
-                // Enough time has passed since "pushLater" was selected
-                console.log('CMTY1: "PushLater" selected and 7 days passed. Showing IAM prompt again.');
-                triggerIAM(true);
-                return;
-            } else {
-                console.log('CMTY1: "PushLater" selected but not enough time has passed. Skipping IAM prompt.');
-                triggerIAM(false);
-                return;
-            }
-        }
-        triggerIAM(false);
-    }
+	if (!details) {
+	    if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
+		console.log('CMTY1: First visit without IAM interaction recorded. Showing IAM prompt.');
+		triggerIAM(true);
+		return;
+	    }
+	} else if (details.interactionType === "pushLater") {
+	    // It's been previously shown with "pushLater". Check if it's time to show it again
+	    const daysSinceLastPrompt = (Date.now() - details.timestamp) / (1000 * 60 * 60 * 24);
+	    if (daysSinceLastPrompt >= 7) {
+		// Enough time has passed since "pushLater" was selected
+		console.log('CMTY1: "PushLater" selected and 7 days passed. Showing IAM prompt again.');
+		triggerIAM(true);
+		return;
+	    } else {
+		console.log('CMTY1: "PushLater" selected but not enough time has passed. Skipping IAM prompt.');
+		triggerIAM(false);
+		return;
+	    }
+	}
+
 
     console.log('CMTY1: Conditions for showing IAM prompt not met.');
     triggerIAM(false);
@@ -370,9 +379,23 @@ function median_library_ready(){
 }
 
 function median_onesignal_info(oneSignalInfo) {
-    console.log('CMTY1: Received OneSignal Info:' + JSON.stringify(oneSignalInfo));
-    sendOneSignalInfoToServer(oneSignalInfo);
-    checkAndTriggerIAMPrompt(oneSignalInfo);
+    	console.log('CMTY1: Received OneSignal Info:' + JSON.stringify(oneSignalInfo));
+	
+	if (window.location.hostname === startDomain) {
+	    sendOneSignalInfoToServer(oneSignalInfo);
+	    checkAndTriggerIAMPrompt(oneSignalInfo);
+	    return;
+	}
+	
+	const currentHash = generateSelectiveOneSignalInfoHash(oneSignalInfo);
+	const storedHash = localStorage.getItem('oneSignalSelectiveInfoHash');
+	localStorage.setItem('oneSignalSelectiveInfoHash', currentHash);
+	
+	if (currentHash === storedHash) {
+	    console.log('CMTY1: Significant OneSignal info has not changed. No need to send to server.');
+	    return;
+	}
+	sendOneSignalInfoToServer(oneSignalInfo);
 }
 
 
