@@ -80,6 +80,10 @@ function set_menu() {
                 url: "https://www.supremecommunity.com/restocks/us/",
                 icon: ""
               },{
+                label: "KR",
+                url: "https://www.supremecommunity.com/restocks/kr/",
+                icon: ""
+              },{
                 label: "JPN",
                 url: "https://www.supremecommunity.com/restocks/jpn/",
                 icon: ""
