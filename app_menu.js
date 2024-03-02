@@ -98,19 +98,19 @@ function set_menu() {
                 icon: "" 
               }, {
                 label: "UK",
-                url: "https://www.supremecommunity.com/season/latest/time/uk/",
+                url: "https://www.supremecommunity.com/season/latest/times/uk/",
                 icon: ""
               },{
                 label: "US",
-                url: "https://www.supremecommunity.com/season/latest/time/us/",
+                url: "https://www.supremecommunity.com/season/latest/times/us/",
                 icon: ""
               },{
                 label: "JPN",
-                url: "https://www.supremecommunity.com/season/latest/time/jpn/",
+                url: "https://www.supremecommunity.com/season/latest/times/jpn/",
                 icon: ""
               },{
                 label: "KR",
-                url: "https://www.supremecommunity.com/season/latest/time/kr/",
+                url: "https://www.supremecommunity.com/season/latest/times/kr/",
                 icon: ""
               }]
             },{
