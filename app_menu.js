@@ -108,6 +108,10 @@ function set_menu() {
                 label: "JPN",
                 url: "https://www.supremecommunity.com/season/latest/time/jpn/",
                 icon: ""
+              },{
+                label: "KR",
+                url: "https://www.supremecommunity.com/season/latest/time/kr/",
+                icon: ""
               }]
             },{
               label: "LOOKBOOKS",
