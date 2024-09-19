@@ -53,15 +53,15 @@ function set_menu() {
               icon: "fas fa-home"
             },{
               label: "ITEMS",
-              url: "https://www.supremecommunity.com/season/latest/overview/",
+              url: "https://www.supremecommunity.com/season/fall-winter2024/overview/",
               icon: "fas fa-clothes-hanger"
             },{
               label: "DROPLISTS",
-              url: "https://www.supremecommunity.com/season/latest/droplists/",
+              url: "https://www.supremecommunity.com/season/fall-winter2024/droplists/",
               icon: "fas fa-list-dropdown"
             },{
               label: "LEFT TO DROP",
-              url: "https://www.supremecommunity.com/season/latest/lefttodrop/",
+              url: "https://www.supremecommunity.com/season/fall-winter2024/lefttodrop/",
               icon: "fas fa-list-timeline"
             },{
               label: "RESTOCKS",
@@ -94,28 +94,28 @@ function set_menu() {
               icon: "fas fa-timer",
               subLinks: [{
                 label: "EU",
-                url: "https://www.supremecommunity.com/season/latest/times/eu/",
+                url: "https://www.supremecommunity.com/season/fall-winter2024/times/eu/",
                 icon: "" 
               }, {
                 label: "UK",
-                url: "https://www.supremecommunity.com/season/latest/times/uk/",
+                url: "https://www.supremecommunity.com/season/fall-winter2024/times/uk/",
                 icon: ""
               },{
                 label: "US",
-                url: "https://www.supremecommunity.com/season/latest/times/us/",
+                url: "https://www.supremecommunity.com/season/fall-winter2024/times/us/",
                 icon: ""
               },{
                 label: "JPN",
-                url: "https://www.supremecommunity.com/season/latest/times/jpn/",
+                url: "https://www.supremecommunity.com/season/fall-winter2024/times/jpn/",
                 icon: ""
               },{
                 label: "KR",
-                url: "https://www.supremecommunity.com/season/latest/times/kr/",
+                url: "https://www.supremecommunity.com/season/fall-winter2024/times/kr/",
                 icon: ""
               }]
             },{
               label: "LOOKBOOKS",
-              url: "https://www.supremecommunity.com/season/latest/lookbook/",
+              url: "https://www.supremecommunity.com/season/fall-winter2024/lookbook/",
               icon: "fas fa-book-user"
             },{
               label: "WEBSHOP",
