@@ -139,15 +139,15 @@ function set_menu() {
               icon: "fas fa-list-dropdown" 
             },{
               label: "COLLECTIONS",
-              url: "https://www.golfwangcommunity.com/collection",
+              url: "https://www.golfwangcommunity.com/collections",
               icon: "fas fa-chart-tree-map"
             },{
               label: "ITEMS",
-              url: "https://www.golfwangcommunity.com/collection/all",
+              url: "https://www.golfwangcommunity.com/collections/all",
               icon: "fas fa-clothes-hanger"
             },{
               label: "LOOKBOOKS",
-              url: "https://www.golfwangcommunity.com/lookbook/latest/",
+              url: "https://www.golfwangcommunity.com/lookbook/spring-summer-2024/",
               icon: "fas fa-book-user" 
             },{
               label: "RESTOCKS",
@@ -155,7 +155,7 @@ function set_menu() {
               icon: "fas fa-retweet"
             },{
               label: "LOOKBOOKS",
-              url: "https://www.golfwangcommunity.com/lookbook/latest",
+              url: "https://www.golfwangcommunity.com/lookbook/spring-summer-2024",
               icon: "fas fa-book-user" 
             },{
               label: "WEBSHOP",
@@ -226,6 +226,10 @@ function set_menu() {
   if (items && items.length) {
       median.sidebar.setItems({"items":items, "enabled":true, "persist":false});     
   }
+}
+
+function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }
 
 function set_title(title) {
@@ -315,9 +319,9 @@ function checkAndTriggerIAMPrompt(oneSignalInfo) {
     var details = iamDetails ? JSON.parse(iamDetails) : null;
 
 	if (!details) {
-	    if (!oneSignalInfo.oneSignalSubscribed || oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized') {
+	    if (!oneSignalInfo.oneSignalSubscribed || (isIOS() && oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized')) {
 		console.log('CMTY1: First visit without IAM interaction recorded. Showing IAM prompt.');
-		triggerIAM(true);
+		triggerIAM(true);  // Trigger the in-app message prompt
 		return;
 	    }
 	} else if (details.interactionType === "pushLater") {
