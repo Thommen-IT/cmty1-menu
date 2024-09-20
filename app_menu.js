@@ -154,10 +154,6 @@ function set_menu() {
               url: "https://www.golfwangcommunity.com/restocks/",
               icon: "fas fa-retweet"
             },{
-              label: "LOOKBOOKS",
-              url: "https://www.golfwangcommunity.com/lookbook/spring-summer-2024",
-              icon: "fas fa-book-user" 
-            },{
               label: "WEBSHOP",
               url: "https://golfwang.com/collections/all",
               icon: "fas fa-shop"
