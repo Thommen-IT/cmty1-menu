@@ -10,39 +10,32 @@ function set_menu() {
   var items = "[]";
   switch(host) {
       case 'cmty.one':
+      case 'cmtyone.com':
+      case 'www.cmtyone.com':
         items = [{
               label: "HOME",
-              url: "https://cmty.one/",
+              url: "https://cmtyone.com",
               icon: "fas fa-home"
             },{
-              label: "LATEST",
-              url: "https://cmty.one/latest/",
+              label: "RELEASES",
+              url: "https://cmtyone.com/releases/",
               icon: "fas fa-sparkles"
-            }, {
-              label: "NEWS",
-              isGrouping: true,
-              icon: "fas fa-newspaper",
-              subLinks: [{
-                label: "SUPREME",
-                url: "https://cmty.one/category/supreme/",
-                icon: "custom icon-supreme-logo"
-              },{
-                label: "PALACE",
-                url: "https://cmty.one/category/palace/",
-                icon: "custom icon-palace-logo"
-              }, {
-                label: "FASHION",
-                url: "https://cmty.one/category/fashion/",
-                icon: "fas fa-shirt"
-              }, {
-                label: "SNEAKERS",
-                url: "https://cmty.one/category/sneakers/",
-                icon: "fas fa-shoe-prints"
-              }]
             },{
-              label: "GALLERY",
-              url: "",
-              icon: "fas fa-images-user"
+              label: "SUPREME",
+              url: "https://cmtyone.com/supreme/",
+              icon: "fas fa-sparkles"
+            },{
+              label: "NIKE",
+              url: "https://cmtyone.com/nike/",
+              icon: "fas fa-sparkles"
+            },{
+              label: "ART",
+              url: "https://cmtyone.com/art/",
+              icon: "fas fa-sparkles"
+            },{
+              label: "FASHION",
+              url: "https://cmtyone.com/fashion/",
+              icon: "fas fa-sparkles"
             }];
         break;
       case 'supremecommunity.com':
