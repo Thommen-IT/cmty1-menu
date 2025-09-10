@@ -46,15 +46,15 @@ function set_menu() {
               icon: "fas fa-home"
             },{
               label: "ITEMS",
-              url: "https://www.supremecommunity.com/season/spring-summer2025/overview/",
+              url: "https://www.supremecommunity.com/season/fall-winter2025/overview/",
               icon: "fas fa-clothes-hanger"
             },{
               label: "DROPLISTS",
-              url: "https://www.supremecommunity.com/season/spring-summer2025/droplists/",
+              url: "https://www.supremecommunity.com/season/fall-winter2025/droplists/",
               icon: "fas fa-list-dropdown"
             },{
               label: "LEFT TO DROP",
-              url: "https://www.supremecommunity.com/season/spring-summer2025/lefttodrop/",
+              url: "https://www.supremecommunity.com/season/fall-winter2025/lefttodrop/",
               icon: "fas fa-list-timeline"
             },{
               label: "RESTOCKS",
@@ -87,28 +87,28 @@ function set_menu() {
               icon: "fas fa-timer",
               subLinks: [{
                 label: "EU",
-                url: "https://www.supremecommunity.com/season/spring-summer2025/times/eu/",
+                url: "https://www.supremecommunity.com/season/fall-winter2025/times/eu/",
                 icon: "" 
               }, {
                 label: "UK",
-                url: "https://www.supremecommunity.com/season/spring-summer2025/times/uk/",
+                url: "https://www.supremecommunity.com/season/fall-winter2025/times/uk/",
                 icon: ""
               },{
                 label: "US",
-                url: "https://www.supremecommunity.com/season/spring-summer2025/times/us/",
+                url: "https://www.supremecommunity.com/season/fall-winter2025/times/us/",
                 icon: ""
               },{
                 label: "JPN",
-                url: "https://www.supremecommunity.com/season/spring-summer2025/times/jpn/",
+                url: "https://www.supremecommunity.com/season/fall-winter2025/times/jpn/",
                 icon: ""
               },{
                 label: "KR",
-                url: "https://www.supremecommunity.com/season/spring-summer2025/times/kr/",
+                url: "https://www.supremecommunity.com/season/fall-winter2025/times/kr/",
                 icon: ""
               }]
             },{
               label: "LOOKBOOKS",
-              url: "https://www.supremecommunity.com/season/spring-summer2025/lookbook/",
+              url: "https://www.supremecommunity.com/season/fall-winter2025/lookbook/",
               icon: "fas fa-book-user"
             },{
               label: "WEBSHOP",
