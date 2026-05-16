@@ -50,12 +50,43 @@ function set_title(title) {
     median.navigationTitles.setCurrent({title: title});
 }
 
+/* Strip SEO cruft from a Flask page title so the native nav bar shows
+   something short and human-readable. Examples:
+     "Box Logo Tee - SS26 - Supreme"            → "Box Logo Tee"
+     "Supreme Droplists - Prices, Items & ..."  → "Droplists"
+     "Archive - Supreme"                        → "Archive"
+     "Supreme"                                  → "Supreme" (untouched) */
+function clean_app_title(raw) {
+    if (!raw) return '';
+    var t = String(raw).trim();
+
+    var dashIdx = t.indexOf(' - ');
+    if (dashIdx > 0) t = t.slice(0, dashIdx).trim();
+
+    var brands = ['Supreme', 'Palace', 'GolfWang', 'Golf Wang', 'CmtyOne', 'CMTY.ONE'];
+    var stripped = t;
+    for (var i = 0; i < brands.length; i++) {
+        var prefix = brands[i] + ' ';
+        if (stripped.length > prefix.length && stripped.toLowerCase().indexOf(prefix.toLowerCase()) === 0) {
+            stripped = stripped.slice(prefix.length).trim();
+            break;
+        }
+    }
+    if (stripped) t = stripped;
+
+    t = t.replace(/\s+/g, ' ').trim();
+    if (t.length > 28) t = t.slice(0, 27).trim() + '…';
+    return t;
+}
+
 function prepare_title() {
+    if (!window.median || !median.navigationTitles) return;
     var metaElement = document.querySelector('meta[name="app-title"]');
     var metaContent = metaElement ? metaElement.getAttribute('content') : null;
-    var htmlTitle = document.title.split(' -')[0];
-    var title = metaContent && metaContent.trim() !== '' ? metaContent : htmlTitle;
-    set_title(title);
+    var raw = (metaContent && metaContent.trim()) ? metaContent : document.title;
+    var title = clean_app_title(raw);
+    if (!title) return;
+    median.navigationTitles.setCurrent({title: title});
 }
 
 /* Onesignal */
@@ -172,30 +203,41 @@ function median_library_ready() {
     median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
 
     if (navigator.userAgent.indexOf('cmtyone') > -1) {
-        if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") {
-            prepare_title();
-        }
-        /* Always refresh the sidebar for the current host. The previous
-           isSetupComplete gate meant the menu froze on whichever host the
-           app booted into (usually cmtyone.com), even after the user
-           navigated into a tenant site. */
+        /* prepare_title runs on every page now (previously gated out on
+           home / /mobile / /mobile2 / cmtyone.com hosts, which meant the
+           title froze on whatever was set when the app first booted). */
+        prepare_title();
         set_menu();
         isSetupComplete = true;
     }
 }
 
 /* Belt-and-braces: if Median's webview keeps the JS context alive across
-   navigations, watch for host changes and refresh the menu when the
-   tenant switches. */
+   navigations, watch for host/URL/title changes and refresh the sidebar
+   and nav title accordingly. */
 var _lastMenuHost = window.location.host;
+var _lastTitleUrl = window.location.href;
+var _lastTitleText = document.title;
 setInterval(function () {
     if (navigator.userAgent.indexOf('cmtyone') === -1) return;
-    if (!window.median || !window.median.sidebar) return;
-    var h = window.location.host;
-    if (h !== _lastMenuHost) {
-        _lastMenuHost = h;
-        console.log('CMTY1: host changed to ' + h + ' — refreshing menu');
-        set_menu();
+    if (!window.median) return;
+
+    if (window.median.sidebar) {
+        var h = window.location.host;
+        if (h !== _lastMenuHost) {
+            _lastMenuHost = h;
+            set_menu();
+        }
+    }
+
+    if (window.median.navigationTitles) {
+        var url = window.location.href;
+        var t = document.title;
+        if (url !== _lastTitleUrl || t !== _lastTitleText) {
+            _lastTitleUrl = url;
+            _lastTitleText = t;
+            prepare_title();
+        }
     }
 }, 1000);
 
