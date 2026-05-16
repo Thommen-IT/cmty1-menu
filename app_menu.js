@@ -171,15 +171,33 @@ function median_library_ready() {
     console.log('CMTY1: median_library_ready');
     median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
 
-    if (isSetupComplete) return;
     if (navigator.userAgent.indexOf('cmtyone') > -1) {
         if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") {
             prepare_title();
         }
+        /* Always refresh the sidebar for the current host. The previous
+           isSetupComplete gate meant the menu froze on whichever host the
+           app booted into (usually cmtyone.com), even after the user
+           navigated into a tenant site. */
         set_menu();
         isSetupComplete = true;
     }
 }
+
+/* Belt-and-braces: if Median's webview keeps the JS context alive across
+   navigations, watch for host changes and refresh the menu when the
+   tenant switches. */
+var _lastMenuHost = window.location.host;
+setInterval(function () {
+    if (navigator.userAgent.indexOf('cmtyone') === -1) return;
+    if (!window.median || !window.median.sidebar) return;
+    var h = window.location.host;
+    if (h !== _lastMenuHost) {
+        _lastMenuHost = h;
+        console.log('CMTY1: host changed to ' + h + ' — refreshing menu');
+        set_menu();
+    }
+}, 1000);
 
 function median_onesignal_info(oneSignalInfo) {
     console.log('CMTY1: Received OneSignal Info:' + JSON.stringify(oneSignalInfo));
