@@ -1,220 +1,45 @@
-/* CMTY1 Menu Code */
+/* CMTY1 Menu Code — dynamic fetch from per-tenant /api/v1/app/menu.json */
 
 var urls = [];
 var isSetupComplete = false;
 var startDomain = "cmtyone.com";
 
+/* Fallback menu for cmtyone.com (platform hub — no tenant API yet) */
+var CMTYONE_FALLBACK = [
+    { label: "HOME",     url: "https://cmtyone.com",            icon: "fas fa-home" },
+    { label: "RELEASES", url: "https://cmtyone.com/releases/",  icon: "fas fa-sparkles" },
+    { label: "SUPREME",  url: "https://cmtyone.com/supreme/",   icon: "fas fa-sparkles" },
+    { label: "NIKE",     url: "https://cmtyone.com/nike/",      icon: "fas fa-sparkles" },
+    { label: "ART",      url: "https://cmtyone.com/art/",       icon: "fas fa-sparkles" },
+    { label: "FASHION",  url: "https://cmtyone.com/fashion/",   icon: "fas fa-sparkles" }
+];
 
 function set_menu() {
-  var host = window.location.host;
-  var items = "[]";
-  switch(host) {
-      case 'cmty.one':
-      case 'cmtyone.com':
-      case 'www.cmtyone.com':
-        items = [{
-              label: "HOME",
-              url: "https://cmtyone.com",
-              icon: "fas fa-home"
-            },{
-              label: "RELEASES",
-              url: "https://cmtyone.com/releases/",
-              icon: "fas fa-sparkles"
-            },{
-              label: "SUPREME",
-              url: "https://cmtyone.com/supreme/",
-              icon: "fas fa-sparkles"
-            },{
-              label: "NIKE",
-              url: "https://cmtyone.com/nike/",
-              icon: "fas fa-sparkles"
-            },{
-              label: "ART",
-              url: "https://cmtyone.com/art/",
-              icon: "fas fa-sparkles"
-            },{
-              label: "FASHION",
-              url: "https://cmtyone.com/fashion/",
-              icon: "fas fa-sparkles"
-            }];
-        break;
-      case 'supremecommunity.com':
-      case 'www.supremecommunity.com':
-        items = [{
-              label: "HOME",
-              url: "https://www.supremecommunity.com/mobile2",
-              icon: "fas fa-home"
-            },{
-              label: "ITEMS",
-              url: "https://www.supremecommunity.com/season/fall-winter2025/overview/",
-              icon: "fas fa-clothes-hanger"
-            },{
-              label: "DROPLISTS",
-              url: "https://www.supremecommunity.com/season/fall-winter2025/droplists/",
-              icon: "fas fa-list-dropdown"
-            },{
-              label: "LEFT TO DROP",
-              url: "https://www.supremecommunity.com/season/fall-winter2025/lefttodrop/",
-              icon: "fas fa-list-timeline"
-            },{
-              label: "RESTOCKS",
-              isGrouping: true, 
-              icon: "fas fa-retweet",
-              subLinks: [{
-                label: "EU",
-                url: "https://www.supremecommunity.com/restocks/eu/",
-                icon: "" 
-              }, {
-                label: "UK",
-                url: "https://www.supremecommunity.com/restocks/uk/",
-                icon: ""
-              },{
-                label: "US",
-                url: "https://www.supremecommunity.com/restocks/us/",
-                icon: ""
-              },{
-                label: "KR",
-                url: "https://www.supremecommunity.com/restocks/kr/",
-                icon: ""
-              },{
-                label: "JPN",
-                url: "https://www.supremecommunity.com/restocks/jpn/",
-                icon: ""
-              }]
-            },{
-              label: "SELLOUT TIMES",
-              isGrouping: true,
-              icon: "fas fa-timer",
-              subLinks: [{
-                label: "EU",
-                url: "https://www.supremecommunity.com/season/fall-winter2025/times/eu/",
-                icon: "" 
-              }, {
-                label: "UK",
-                url: "https://www.supremecommunity.com/season/fall-winter2025/times/uk/",
-                icon: ""
-              },{
-                label: "US",
-                url: "https://www.supremecommunity.com/season/fall-winter2025/times/us/",
-                icon: ""
-              },{
-                label: "JPN",
-                url: "https://www.supremecommunity.com/season/fall-winter2025/times/jpn/",
-                icon: ""
-              },{
-                label: "KR",
-                url: "https://www.supremecommunity.com/season/fall-winter2025/times/kr/",
-                icon: ""
-              }]
-            },{
-              label: "LOOKBOOKS",
-              url: "https://www.supremecommunity.com/season/fall-winter2025/lookbook/",
-              icon: "fas fa-book-user"
-            },{
-              label: "WEBSHOP",
-              url: "https://supreme.com/shop/all",
-              icon: "fas fa-shop"
-            },{
-              label: "HELP",
-              url: "https://www.supremecommunity.com/help/",
-              icon: "fas fa-square-question"
-            }];
-        break;
-      case 'golfwangcommunity.com':
-      case 'www.golfwangcommunity.com':
-        items = [{
-              label: "HOME",
-              url: "https://www.golfwangcommunity.com/mobile2",
-              icon: "fas fa-home" 
-            },{
-              label: "DROPLISTS",
-              url: "https://www.golfwangcommunity.com/droplists",
-              icon: "fas fa-list-dropdown" 
-            },{
-              label: "COLLECTIONS",
-              url: "https://www.golfwangcommunity.com/collections",
-              icon: "fas fa-chart-tree-map"
-            },{
-              label: "ITEMS",
-              url: "https://www.golfwangcommunity.com/collections/all",
-              icon: "fas fa-clothes-hanger"
-            },{
-              label: "LOOKBOOKS",
-              url: "https://www.golfwangcommunity.com/lookbook/spring-summer-2024/",
-              icon: "fas fa-book-user" 
-            },{
-              label: "RESTOCKS",
-              url: "https://www.golfwangcommunity.com/restocks/",
-              icon: "fas fa-retweet"
-            },{
-              label: "WEBSHOP",
-              url: "https://golfwang.com/collections/all",
-              icon: "fas fa-shop"
-            },{
-              label: "HELP",
-              url: "https://www.golfwangcommunity.com/help",
-              icon: "fas fa-square-question" 
-            }];
-        break;
-      case 'palacecmty.com':
-      case 'www.palacecmty.com':
-        items = [{
-              label: "HOME",
-              url: "https://www.palacecmty.com/mobile2",
-              icon: "fas fa-home" 
-            },{
-              label: "DROPLISTS",
-              url: "https://www.palacecmty.com/droplists",
-              icon: "fas fa-list-dropdown" 
-            },{
-              label: "COLLECTIONS",
-              url: "https://www.palacecmty.com/collections",
-              icon: "fas fa-chart-tree-map"
-            },{
-              label: "ITEMS",
-              url: "https://www.palacecmty.com/collections/all",
-              icon: "fas fa-clothes-hanger"
-            },{
-              label: "RESTOCKS",
-              isGrouping: true,
-              icon: "fas fa-retweet",
-              subLinks: [{
-                label: "EU",
-                url: "https://www.palacecmty.com/restocks/eu",
-                icon: "" 
-              }, {
-                label: "UK",
-                url: "https://www.palacecmty.com/restocks/uk",
-                icon: ""
-              },{
-                label: "US",
-                url: "https://www.palacecmty.com/restocks/us",
-                icon: ""
-              },{
-                label: "JPN",
-                url: "https://www.palacecmty.com/restocks/jp",
-                icon: ""
-              }]
-            },{
-              label: "LOOKBOOKS",
-              url: "https://www.palacecmty.com/lookbooks",
-              icon: "fas fa-book-user" 
-            },{
-              label: "WEBSHOP",
-              url: "https://shop.palaceskateboards.com",
-              icon: "fas fa-shop"
-            },{
-              label: "HELP",
-              url: "https://www.palacecmty.com/help",
-              icon: "fas fa-square-question" 
-            }];
-        break;
-      default:
-        console.log("No menu items found for this domain.")
-  }
-  if (items && items.length) {
-      median.sidebar.setItems({"items":items, "enabled":true, "persist":false});     
-  }
+    var host = window.location.host;
+
+    /* Platform hub still uses the hardcoded fallback */
+    if (host === "cmty.one" || host === "cmtyone.com" || host === "www.cmtyone.com") {
+        median.sidebar.setItems({ items: CMTYONE_FALLBACK, enabled: true, persist: false });
+        return;
+    }
+
+    /* Tenant domains: fetch live menu from AIO */
+    fetch("/api/v1/app/menu.json", { credentials: "same-origin" })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            if (data && data.enabled && data.items && data.items.length) {
+                median.sidebar.setItems({
+                    items: data.items,
+                    enabled: true,
+                    persist: data.persist === true
+                });
+            } else {
+                console.log("CMTY1: menu.json returned no items for " + host);
+            }
+        })
+        .catch(function (err) {
+            console.log("CMTY1: menu fetch error: " + err);
+        });
 }
 
 function isIOS() {
@@ -222,7 +47,6 @@ function isIOS() {
 }
 
 function set_title(title) {
-    //window.location.href = 'median://navigationTitles/setCurrent?title=' + title;
     median.navigationTitles.setCurrent({title: title});
 }
 
@@ -245,98 +69,81 @@ function generateSelectiveOneSignalInfoHash(oneSignalInfo) {
         }
     });
 
-    // Convert this filtered object to a string, ensuring key order consistency
     const str = JSON.stringify(filteredInfo, Object.keys(filteredInfo).sort());
     let hash = 0, i, chr;
     for (i = 0; i < str.length; i++) {
         chr   = str.charCodeAt(i);
         hash  = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
+        hash |= 0;
     }
     return hash.toString();
 }
 
-function sendOneSignalInfoToServer(oneSignalInfo) {	
+function sendOneSignalInfoToServer(oneSignalInfo) {
     const endpoint = 'https://app.cmty.one/api/register-push';
 
     try {
-        // Attempt to retrieve IAM interaction details from localStorage
         const iamDetailsJson = localStorage.getItem('iamPromptDetails');
         if (iamDetailsJson) {
             const iamDetails = JSON.parse(iamDetailsJson);
-            
             oneSignalInfo.iamInteractionAction = iamDetails.interactionType;
             oneSignalInfo.iamInteractionTimestamp = iamDetails.timestamp;
         }
     } catch (error) {
         console.error('Error appending IAM interaction details to OneSignal info:', error);
     }
-	
+
     console.log('CMTY1: OneSignal info sending:' + JSON.stringify(oneSignalInfo));
 
     fetch(endpoint, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(oneSignalInfo)
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
     })
     .then(data => console.log('CMTY1: OneSignal info sent successfully:' + JSON.stringify(data)))
     .catch(error => console.log('CMTY1: Error sending OneSignal info:' + JSON.stringify(error)));
 }
 
-
-
-// Callback when push on backend registered
 function cmty_push_registered() {
     median.onesignal.onesignalInfo().then(function (oneSignalInfo) {
         sendOneSignalInfoToServer(oneSignalInfo);
     });
 }
 
-/* End Onesignal */
-
 /* In-App Messaging (IAM) */
 function checkAndTriggerIAMPrompt(oneSignalInfo) {
     var iamDetails = localStorage.getItem('iamPromptDetails');
     var details = iamDetails ? JSON.parse(iamDetails) : null;
 
-	if (!details) {
-	    if (!oneSignalInfo.oneSignalSubscribed || (isIOS() && oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized')) {
-		console.log('CMTY1: First visit without IAM interaction recorded. Showing IAM prompt.');
-		triggerIAM(true);  // Trigger the in-app message prompt
-		return;
-	    }
-	} else if (details.interactionType === "pushLater") {
-	    // It's been previously shown with "pushLater". Check if it's time to show it again
-	    const daysSinceLastPrompt = (Date.now() - details.timestamp) / (1000 * 60 * 60 * 24);
-	    if (daysSinceLastPrompt >= 7) {
-		// Enough time has passed since "pushLater" was selected
-		console.log('CMTY1: "PushLater" selected and 7 days passed. Showing IAM prompt again.');
-		triggerIAM(true);
-		return;
-	    } else {
-		console.log('CMTY1: "PushLater" selected but not enough time has passed. Skipping IAM prompt.');
-		triggerIAM(false);
-		return;
-	    }
-	}
-
+    if (!details) {
+        if (!oneSignalInfo.oneSignalSubscribed || (isIOS() && oneSignalInfo.oneSignalNotificationPermissionStatus !== 'authorized')) {
+            console.log('CMTY1: First visit without IAM interaction recorded. Showing IAM prompt.');
+            triggerIAM(true);
+            return;
+        }
+    } else if (details.interactionType === "pushLater") {
+        const daysSinceLastPrompt = (Date.now() - details.timestamp) / (1000 * 60 * 60 * 24);
+        if (daysSinceLastPrompt >= 7) {
+            console.log('CMTY1: "PushLater" selected and 7 days passed. Showing IAM prompt again.');
+            triggerIAM(true);
+            return;
+        } else {
+            console.log('CMTY1: "PushLater" selected but not enough time has passed. Skipping IAM prompt.');
+            triggerIAM(false);
+            return;
+        }
+    }
 
     console.log('CMTY1: Conditions for showing IAM prompt not met.');
     triggerIAM(false);
 }
 
-
-// Trigger the IAM prompt based on conditions
 function triggerIAM(showIAM) {
-    console.log('CMTY1: triggerIAM showPrompt: '+showIAM);
+    console.log('CMTY1: triggerIAM showPrompt: ' + showIAM);
     if (showIAM) {
         median.onesignal.iam.addTrigger({'showPrompt': 'true'});
     } else {
@@ -344,72 +151,63 @@ function triggerIAM(showIAM) {
     }
 }
 
-// Handler for IAM response
 function iamResponseHandler(data) {
-    console.log('CMTY1: OneSignal iamResponseHandler');	
+    console.log('CMTY1: OneSignal iamResponseHandler');
     try {
         const interactionData = {
             interactionType: data.clickName,
             timestamp: Date.now()
         };
-
         localStorage.setItem('iamPromptDetails', JSON.stringify(interactionData));
-	median.onesignal.onesignalInfo().then(function (oneSignalInfo) {
+        median.onesignal.onesignalInfo().then(function (oneSignalInfo) {
             sendOneSignalInfoToServer(oneSignalInfo);
-	});
+        });
     } catch (error) {
-        console.log('Error in IAM response: '+ JSON.stringify(error));
+        console.log('Error in IAM response: ' + JSON.stringify(error));
     }
 }
 
+function median_library_ready() {
+    console.log('CMTY1: median_library_ready');
+    median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
 
-/* End In-App Messaging (IAM) */
-function median_library_ready(){
-   console.log('CMTY1: median_library_ready');	   
-   median.onesignal.iam.setInAppMessageClickHandler('iamResponseHandler');
-
-   if (isSetupComplete) return;
-   if (navigator.userAgent.indexOf('cmtyone') > -1) {
-      var isAppUser = true;
-      if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") { 
-     	prepare_title();
-      }
-     set_menu();
-     isSetupComplete = true;
-  }
+    if (isSetupComplete) return;
+    if (navigator.userAgent.indexOf('cmtyone') > -1) {
+        if (window.location.pathname != "/" && window.location.pathname != "/mobile" && window.location.pathname != "/mobile2" && window.location.hostname != "cmty.one" && window.location.hostname != "cmtyone.com") {
+            prepare_title();
+        }
+        set_menu();
+        isSetupComplete = true;
+    }
 }
 
 function median_onesignal_info(oneSignalInfo) {
-    	console.log('CMTY1: Received OneSignal Info:' + JSON.stringify(oneSignalInfo));
-	
-	if (window.location.hostname === startDomain) {
-	    sendOneSignalInfoToServer(oneSignalInfo);
-	    checkAndTriggerIAMPrompt(oneSignalInfo);
-	    return;
-	}
-	
-	const currentHash = generateSelectiveOneSignalInfoHash(oneSignalInfo);
-	const storedHash = localStorage.getItem('oneSignalSelectiveInfoHash');
-	localStorage.setItem('oneSignalSelectiveInfoHash', currentHash);
-	
-	if (currentHash === storedHash) {
-	    console.log('CMTY1: Significant OneSignal info has not changed. No need to send to server.');
-	    return;
-	}
-	sendOneSignalInfoToServer(oneSignalInfo);
+    console.log('CMTY1: Received OneSignal Info:' + JSON.stringify(oneSignalInfo));
+
+    if (window.location.hostname === startDomain) {
+        sendOneSignalInfoToServer(oneSignalInfo);
+        checkAndTriggerIAMPrompt(oneSignalInfo);
+        return;
+    }
+
+    const currentHash = generateSelectiveOneSignalInfoHash(oneSignalInfo);
+    const storedHash = localStorage.getItem('oneSignalSelectiveInfoHash');
+    localStorage.setItem('oneSignalSelectiveInfoHash', currentHash);
+
+    if (currentHash === storedHash) {
+        console.log('CMTY1: Significant OneSignal info has not changed. No need to send to server.');
+        return;
+    }
+    sendOneSignalInfoToServer(oneSignalInfo);
 }
 
-
-// Call the function manually if your page content is slow to load and
-// expose the median_library_ready() function, e.g. using a web framework
-if(window.median){
-	window.median_library_ready();
+if (window.median) {
+    window.median_library_ready();
 }
 
-// Check if the hash does not include 'google_vignette' - vignette ads
-window.addEventListener('hashchange', function() {
+window.addEventListener('hashchange', function () {
     if (!window.location.hash.includes('google_vignette')) {
         console.log('#google_vignette has been removed from the URL hash');
-     	prepare_title();
-    } 
+        prepare_title();
+    }
 });
